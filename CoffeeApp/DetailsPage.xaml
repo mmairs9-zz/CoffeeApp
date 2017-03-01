@@ -1,0 +1,136 @@
+﻿<Page
+    x:Class="CoffeeApp.DetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CoffeeApp"
+    xmlns:data="using:CoffeeApp.Data"
+    xmlns:h="using:CoffeeApp.Helpers"
+    xmlns:c="using:CoffeeApp.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer x:Name="RootElement" 
+                  HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                  HorizontalScrollMode="Disabled"   HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto"
+                  ZoomMode="Disabled">
+       
+        <StackPanel HorizontalAlignment="Stretch">
+            <Grid x:Name="Hero">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.RowSpan="2" Name="HeroGrid">
+                    <!--<Image Name="HeroImage" Stretch="UniformToFill" VerticalAlignment="Top"></Image>
+                    <Image Source="Assets/particle1.png" Stretch="UniformToFill"></Image>
+                    <Border Background="#7F000000"></Border>
+                    <Image Source="Assets/gradient3.png" Stretch="UniformToFill"></Image>-->
+                </Grid>
+
+
+               
+                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                            Grid.RowSpan="1" Margin="30, 0, 30, 0"  >
+                    <c:FocusableItem x:Name="Section1">
+                        <StackPanel HorizontalAlignment="Stretch" Margin="0,20,0,0" >
+                            <Border HorizontalAlignment="Center" Margin="0,20,0,0" BorderBrush="#33FFFFFF" BorderThickness="0,0,0,1">
+                                <TextBlock x:Name="TitleLine" TextAlignment="Center" FontSize="29.333" Margin="0,0,0,0" Text="{x:Bind Item.Title}"></TextBlock>
+                            </Border>
+                            <TextBlock Name="SummaryText" Text="{x:Bind Item.Summary}" TextWrapping="WrapWholeWords" MaxWidth="500" TextAlignment="Center" Opacity="0.6" Margin="0,0,0,25" FontSize="12" TextLineBounds="TrimToBaseline">
+                         
+                            </TextBlock>
+                           
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Size" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton Content="Regular" Tag="Regular" />
+                                    <RadioButton Content="Large" Tag="Large" />
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Center" >
+                                <TextBlock Text="Shot Options" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBlock x:Name="shotCount" Text="1"/>
+                                    <TextBlock x:Name="shotCountLabel" Width="140" Padding="5,0,20,0" Text="Shots"/>
+                                    <Button Margin="30,0,10,0" Content="+"></Button>
+                                    <Button Content="-"></Button>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Decaf" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox x:Name="decaf" Width="240"></CheckBox>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Milk" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel>
+                                    <RadioButton x:Name="MilkRegular" Content="Regualar"/>
+                                    <RadioButton x:Name="MilkLowFatr" Content="Low Fat"/>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <RadioButton x:Name="MilkSkimmed" Content="Skimmed"/>
+                                    <RadioButton x:Name="MilkNonDiary" Content="Non Dairy"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Syrups" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel>
+                                        <RadioButton x:Name="SyrupAlmond" Content="Almond"/>
+                                        <RadioButton x:Name="SyrupHazelnut" Content="Hazelnut"/>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <RadioButton x:Name="SyrupPeppermint" Content="Peppermint"/>
+                                        <RadioButton x:Name="SyrupVanilla" Content="Vanilla"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Center" Margin="20">
+                                <TextBlock Text="Additonal" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel>
+                                        <CheckBox x:Name="RoomForMilk" Width="240" Content="Leave room for milk"/>
+                                        <CheckBox x:Name="ExtraFoam" Content="Extra Foam"/>
+                                        <CheckBox x:Name="Takeout" Content="Take Out"/>
+                                    </StackPanel>
+                                  
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Center" Padding="0,20">
+                                <Button Content="Order" Click="OrderButton_Click" Background="#FFBB9918"></Button>
+                            </StackPanel>
+                            <Image Name="GlifMain" Source="Assets/glif1.png" Height="70" Opacity="0"></Image>
+                        </StackPanel>
+                    </c:FocusableItem>
+
+
+                </StackPanel>
+
+                <Image Source="Assets/logo.png" Height="40" Width="40" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="60,30"></Image>
+
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,30,40,0">
+                    <StackPanel Name="LikesStack" Orientation="Horizontal">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" ></TextBlock>
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="12" VerticalAlignment="Center" Margin="10,0,3,0"></TextBlock>
+                        <TextBlock FontSize="12" VerticalAlignment="Center" Margin="0,7,0,0">3</TextBlock>
+                    </StackPanel>
+                    <Grid Margin="15,0,0,0" Height="35" Width="35">
+                        <Ellipse  Fill="#19FFFFFF"></Ellipse>
+                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#A3FFFFFF"></TextBlock>
+                    </Grid>
+
+                </StackPanel>
+            </Grid>
+
+
+        </StackPanel>
+
+    </ScrollViewer>
+</Page>
