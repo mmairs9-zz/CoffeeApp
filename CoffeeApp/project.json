@@ -1,5 +1,6 @@
 ﻿{
   "dependencies": {
+    "lightbuzz-smtp": "1.8.0",
     "Microsoft.Azure.Mobile.Client": "3.1.0",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "Microsoft.Toolkit.Uwp.UI": "1.0.0",

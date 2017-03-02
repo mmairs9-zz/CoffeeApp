@@ -131,8 +131,6 @@
                 <TextBlock Margin="5">Sign in</TextBlock>
             </StackPanel>
         </Button>
-        <TextBox Name="_TextboxMessages" Height="100" Width="500"></TextBox>
-        <TextBox Name="_TextboxResults" Height="100" Width="500"></TextBox>
         <!--<Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="60,30">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Name="WeatherIcon" Opacity="0.4" FontFamily="Segoe MDL2 Assets" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#A3FFFFFF"></TextBlock>

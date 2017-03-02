@@ -8,6 +8,10 @@ namespace CoffeApp.Data
 {
     public class User
     {
+        public User()
+        {
+
+        }
         /// <summary>
         /// The user's name.
         /// </summary>
@@ -19,10 +23,9 @@ namespace CoffeApp.Data
         public string Email { get; set; }
 
         /// <summary>
-        /// The user's IDP info. 
+        /// The user's name.
         /// </summary>
-        public ProviderInfo Auth { get; set; }
-        
+        public string Id { get; set; }
 
         /// <summary>
         /// URL to the user's IDP photo.

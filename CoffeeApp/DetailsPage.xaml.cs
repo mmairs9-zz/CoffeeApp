@@ -1,29 +1,19 @@
 ﻿using Microsoft.Toolkit.Uwp.UI.Animations;
 using CoffeeApp.Data;
-using CoffeeApp.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using LightBuzz.SMTP;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Media.Core;
-using Windows.Storage.Streams;
 using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using CoffeApp.Data;
+using Windows.UI.Popups;
+using Windows.ApplicationModel.Email;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -96,11 +86,7 @@ namespace CoffeeApp
                 summaryAnimation.TryStart(SummaryText);
             }
 
-            var likesAnimation = animationService.GetAnimation("Likes");
-            if (likesAnimation != null)
-            {
-                likesAnimation.TryStart(LikesStack);
-            }
+           
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -160,15 +146,95 @@ namespace CoffeeApp
         async
         private void OrderButton_Click(object sender, RoutedEventArgs e)
         {
+            string userID = App.User.Id;
             OrderItem item = new OrderItem
             {
-                Text = "Awesome item",
-                Complete = false
+                userId = userID,
+                drinkName = Item.Title,
+                shots = int.Parse(shotCount.Text),
+                size = selectedSize,
+                milkType = selectedMilk,
+                syrup = selectedSyrup,
+                extraFoam = (bool)ExtraFoam.IsChecked,
+                roomForMilk = (bool)RoomForMilk.IsChecked,
+                takeout = (bool)Takeout.IsChecked,
+                decaf = (bool)decaf.IsChecked,
+
             };
             await App.MobileService.GetTable<OrderItem>().InsertAsync(item);
+            await sendEmail();
+            var dialog = new MessageDialog("Your Order has been recieved. We will let you know once it is ready");
+            dialog.Commands.Add(new UICommand("OK"));
+            await dialog.ShowAsync();
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        private async Task sendEmail()
+        {
+            using (SmtpClient client = new SmtpClient("smtp.gmail.com", 465, true, "coffeeux@gmail.com", "manuelseaz"))
+            {
+                EmailMessage emailMessage = new EmailMessage();
+
+                emailMessage.To.Add(new EmailRecipient("mmairs9@gmail.com"));
+                emailMessage.Subject = "New Coffee order";
+                emailMessage.Body = App.MobileService.CurrentUser.UserId+" has made a coffee order!";
+
+                await client.SendMailAsync(emailMessage);
+            }
+        }
+
+    
+
+        private void AddShotButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            if (int.Parse(shotCount.Text)>=5)
+            {
+                return;
+               
+            }
+            else
+            {
+                shotCount.Text = (int.Parse(shotCount.Text) + 1).ToString();
+            }
+        }
+
+        private void RemoveShotButton_Click(object sender, RoutedEventArgs e)
+        {
+       
+            if (int.Parse(shotCount.Text) ==1)
+            {
+                return;
+            }
+            else
+            {
+                shotCount.Text = (int.Parse(shotCount.Text) - 1).ToString();
+            }
+          
+        }
+        string selectedMilk;
+        private void milkRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton ck = sender as RadioButton;
+            if (ck.IsChecked.Value)
+                selectedMilk = ck.Content.ToString();
+        }
+        string selectedSyrup;
+        private void syrupRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton ck = sender as RadioButton;
+            if (ck.IsChecked.Value)
+                selectedSyrup = ck.Content.ToString();
+        }
+        string selectedSize;
+        private void sizeRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton ck = sender as RadioButton;
+            if (ck.IsChecked.Value)
+                selectedSize = ck.Content.ToString();
         }
     }
-
+   
     internal class AnimatableSection
     {
         public FrameworkElement Element { get; set; }

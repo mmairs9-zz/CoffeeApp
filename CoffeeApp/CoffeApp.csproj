@@ -102,11 +102,7 @@
     <Compile Include="DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\AccountTokenStorage.cs" />
     <Compile Include="Helpers\AnimationExtensions.News.cs" />
-    <Compile Include="Helpers\APIHelper.cs" />
-    <Compile Include="Helpers\AuthenticationHelper.cs" />
-    <Compile Include="Helpers\AzureAppServiceMicrosoftAccountClient.cs" />
     <Compile Include="Helpers\Composition\CompositionImage.cs" />
     <Compile Include="Helpers\Composition\CompositionShadow.xaml.cs">
       <DependentUpon>CompositionShadow.xaml</DependentUpon>
@@ -186,6 +182,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

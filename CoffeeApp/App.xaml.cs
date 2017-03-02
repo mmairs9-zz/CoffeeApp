@@ -1,5 +1,4 @@
 ﻿using CoffeApp.Data;
-using CoffeApp.Helpers;
 using Microsoft.WindowsAzure.MobileServices;
 using System;
 using System.Collections.Generic;
@@ -44,11 +43,7 @@ namespace CoffeeApp
         /// <summary>
         /// The current user of the app. Null if no user is not yet logged in.
         /// </summary>
-        public static User User { get; set; }
-        /// <summary>
-        /// Global helper for making calls to the REST API service.
-        /// </summary>
-        public static ApiHelper Api { get; set; } = new ApiHelper();
+        public static User User = new User();
 
         public static bool IsXbox()
         {
