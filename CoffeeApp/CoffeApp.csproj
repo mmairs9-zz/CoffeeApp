@@ -136,7 +136,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\coffeeBackground.jpg" />
+    <Content Include="Assets\americano.jpg" />
+    <Content Include="Assets\cappuciano.jpg" />
+    <Content Include="Assets\flatwhite.jpg" />
     <Content Include="Assets\glif1.png" />
     <Content Include="Assets\glif2.png" />
     <Content Include="Assets\glif3.png" />
@@ -144,11 +146,10 @@
     <Content Include="Assets\gradient2.png" />
     <Content Include="Assets\gradient3.png" />
     <Content Include="Assets\heart.png" />
-    <Content Include="Assets\image1.png" />
+    <Content Include="Assets\latte.jpg" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\logo.png" />
     <Content Include="Assets\particle1.png" />
-    <Content Include="Assets\play.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />

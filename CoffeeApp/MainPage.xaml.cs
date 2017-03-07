@@ -78,13 +78,14 @@ namespace CoffeeApp
 
 
             Topics = DrinkItem.GetListOfTopics();
-           // this.Loaded += MainPage_Loaded;
+            this.Loaded += MainPage_Loaded;
             this.InitializeComponent();
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            RootPage.Current.UpdateBackground(Items.First().HeroImage, 0);
+
+            RootPage.Current.UpdateBackground(DrinkItem.GetData().First().HeroImage.UriSource.AbsoluteUri, 0);
             SectionList.SelectedIndex = 0;
         }
 
@@ -227,10 +228,11 @@ namespace CoffeeApp
 
             deferral.Complete();
         }
+       
         private async void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
-
-           await GetTokenSilentlyAsync();
+           
+            await GetTokenSilentlyAsync();
             
         }
         private async void ButtonLogout_Click(object sender, RoutedEventArgs e)
@@ -336,7 +338,7 @@ namespace CoffeeApp
 
             var story = e.ClickedItem as DrinkItem;
 
-            RootPage.Current.UpdateBackground(story.HeroImage, 0);
+            RootPage.Current.UpdateBackground(story.HeroImage.UriSource.AbsoluteUri, 0);
             Frame.Navigate(typeof(DetailsPage), story);
 
         }

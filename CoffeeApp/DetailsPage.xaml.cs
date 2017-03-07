@@ -149,6 +149,7 @@ namespace CoffeeApp
         async
         private void OrderButton_Click(object sender, RoutedEventArgs e)
         {
+            spinner.IsActive = true;
             string userID = App.User.Id;
              item = new OrderItem
             {
@@ -170,6 +171,7 @@ namespace CoffeeApp
             var dialog = new MessageDialog("Your Order has been recieved. We will let you know once it is ready");
             dialog.Commands.Add(new UICommand("OK"));
             await dialog.ShowAsync();
+            spinner.IsActive = false;
             Frame.Navigate(typeof(MainPage));
         }
 
@@ -192,7 +194,12 @@ namespace CoffeeApp
                      + "Shots: " + item.shots + "\n"
                        + "Room for Milk: " + item.roomForMilk + "\n"
                           + "Take Out: " + item.takeout + "\n"
-                             + "Extra Foam: " + item.extraFoam + "\n";
+                             + "Extra Foam: " + item.extraFoam + "\n\n"
+                               + "Completing the order?\n\n"
+                + "To complete order please visit https://coffeeappux.azurewebsites.net/swagger/ui/ "
+                   + "open the patch section and paste the order id: "+item.Id  +" into the request id field."
+                +" Then in the request body paste the following {\"completed\":true} and scroll to the bottom of the section and click the \"Try it out\" Button. " 
+                +"This will complete the order and send a push notification to inform the customer that their drink is ready for collection.";
 
                 await client.SendMailAsync(emailMessage);
             }

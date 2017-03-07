@@ -17,6 +17,7 @@
                   ZoomMode="Disabled">
        
         <StackPanel HorizontalAlignment="Stretch">
+           
             <Grid x:Name="Hero">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -25,10 +26,7 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.RowSpan="2" Name="HeroGrid">
-                    <!--<Image Name="HeroImage" Stretch="UniformToFill" VerticalAlignment="Top"></Image>
-                    <Image Source="Assets/particle1.png" Stretch="UniformToFill"></Image>
-                    <Border Background="#7F000000"></Border>
-                    <Image Source="Assets/gradient3.png" Stretch="UniformToFill"></Image>-->
+                    <ProgressRing x:Name="spinner" IsActive="false" Foreground="#FFBB9918" Height="100" Width="100"/>
                 </Grid>
 
 
@@ -125,8 +123,9 @@
                 </StackPanel>
             </Grid>
 
-
+         
         </StackPanel>
 
     </ScrollViewer>
+    
 </Page>
