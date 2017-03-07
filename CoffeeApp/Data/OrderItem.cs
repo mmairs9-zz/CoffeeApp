@@ -10,6 +10,7 @@ namespace CoffeApp.Data
     {
         public string Id { get; set; }
         public string userId { get; set; }
+        public string userName { get; set; }
         public string drinkName { get; set; }
         public string size { get; set; }
         public int shots { get; set; }

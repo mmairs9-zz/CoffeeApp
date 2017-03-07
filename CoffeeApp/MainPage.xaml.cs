@@ -35,6 +35,9 @@ using Windows.UI.ApplicationSettings;
 using Windows.Security.Authentication.Web.Core;
 using System.Text;
 using Newtonsoft.Json;
+using Windows.System;
+using System.Net.Http;
+using Windows.Data.Json;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -48,13 +51,6 @@ namespace CoffeeApp
 
         private string _MicrosoftAccountToken = null;
         private string _AppAuthToken = null;
-
-        private const string MicrosoftAccountProviderId = "https://login.microsoft.com";
-        private const string ConsumerAuthority = "consumers";
-        private const string AccountScopeRequested = "wl.basic";
-        private const string AccountClientId = "d4c5056c-ceb9-46b1-b69d-b3d3b5606898";
-        private const string _KeyNameForMicrosoftAccount = "msa-used-by-uwp-sample";
-        private const string _KeyNameForMicrosoftAccountToken = "msa-used-by-uwp-sample-token";
 
         private List<DrinkItem> items;
 
@@ -95,61 +91,179 @@ namespace CoffeeApp
        
         // Define a member variable for storing the signed-in user. 
         private MobileServiceUser user;
+
+        public static WebAccount account;
         // Define a method that performs the authentication process
         // using a Facebook sign-in. 
-        private async System.Threading.Tasks.Task<bool> AuthenticateAsync()
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            string message;
-            bool success = false;
-            try
-            {
-                // Change 'MobileService' to the name of your MobileServiceClient instance.
-                // Sign-in using Facebook authentication.
-                user = await App.MobileService
-                    .LoginAsync(MobileServiceAuthenticationProvider.MicrosoftAccount);
-                message =
-                    string.Format("You are now signed in - {0}", user.UserId);
-                var response = await App.MobileService.InvokeApiAsync("/.auth/me");
-                //dynamic userDetails = JsonConvert.DeserializeObject(response);
-                //App.User.Name = userDetails[0].user_Id;
-                App.User.Id = user.UserId;
-                
-                App.MobileService.CurrentUser = user;
-
-                success = true;
-            }
-            catch (InvalidOperationException)
-            {
-                message = "You must log in. Login Required";
-            }
-
-            var dialog = new MessageDialog(message);
-            dialog.Commands.Add(new UICommand("OK"));
-            await dialog.ShowAsync();
-            return success;
-
-
-
-            return success;
+            AccountsSettingsPane.GetForCurrentView().AccountCommandsRequested += BuildPaneAsync;
         }
-
-        private async void ButtonLogin_Click(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            // Login the user and then load data from the mobile app.
-            if (await AuthenticateAsync())
-            {
-                // Switch the buttons and load items from the mobile app.
-                ButtonLogin.Visibility = Visibility.Collapsed;
-
-                this.NavigationCacheMode = NavigationCacheMode.Required;
-                var items = DrinkItem.GetData();
-                Items = items;
-                this.Loaded += MainPage_Loaded;
-                RootPage.Current.ImageCount = Items.Count;
-            }
-         
+            AccountsSettingsPane.GetForCurrentView().AccountCommandsRequested -= BuildPaneAsync;
         }
        
+      
+        private async void GetMsaTokenAsync(WebAccountProviderCommand command)
+        {
+            WebTokenRequest request = new WebTokenRequest(command.WebAccountProvider, "wl.basic");
+            WebTokenRequestResult result = await WebAuthenticationCoreManager.RequestTokenAsync(request);
+
+            if (result.ResponseStatus == WebTokenRequestStatus.Success)
+            {
+                account = result.ResponseData[0].WebAccount;
+                StoreWebAccount(account);
+                await getUserData(result);
+                LoadPageData();
+
+            }
+        }
+        private async Task getUserData(WebTokenRequestResult result)
+        {
+            string token = result.ResponseData[0].Token;
+
+           
+            var restApi = new Uri(@"https://apis.live.net/v5.0/me?access_token=" + token);
+
+            using (var client = new HttpClient())
+            {
+                var infoResult = await client.GetAsync(restApi);
+                string content = await infoResult.Content.ReadAsStringAsync();
+
+                var jsonObject = JsonObject.Parse(content);
+                string id = jsonObject["id"].GetString();
+                App.User.Id = id;
+                string name = jsonObject["name"].GetString();
+
+                App.User.Name = name;
+
+                GetUserProfileImageAsync(token);
+            }
+
+            App.InitNotificationsAsync();
+            LoadPageData();
+        }
+        private async void GetUserProfileImageAsync(String token)
+        {
+            var photoApi = new Uri(@"https://apis.live.net/v5.0/me/picture?access_token=" + token);
+            using (var client = new HttpClient())
+            {
+                var photoResult = await client.GetAsync(photoApi);
+                using (var imageStream = await photoResult.Content.ReadAsStreamAsync())
+                {
+                    App.User.PhotoUrl = new BitmapImage();
+                    using (var randomStream = imageStream.AsRandomAccessStream())
+                    {
+                        await App.User.PhotoUrl.SetSourceAsync(randomStream);
+                        myProfile.Source = App.User.PhotoUrl;
+                        placeHolderImage.Visibility = Visibility.Collapsed;
+                    }
+
+                }
+            }
+        }
+        private async void StoreWebAccount(WebAccount account)
+        {
+            ApplicationData.Current.LocalSettings.Values["CurrentUserProviderId"] = account.WebAccountProvider.Id;
+            ApplicationData.Current.LocalSettings.Values["CurrentUserId"] = account.Id;
+        }
+        private async Task<string> GetTokenSilentlyAsync()
+        {
+            string providerId = ApplicationData.Current.LocalSettings.Values["CurrentUserProviderId"]?.ToString();
+            string accountId = ApplicationData.Current.LocalSettings.Values["CurrentUserId"]?.ToString();
+
+            if (null == providerId || null == accountId)
+            {
+                AccountsSettingsPane.Show();
+                return null;
+            }
+
+            WebAccountProvider provider = await WebAuthenticationCoreManager.FindAccountProviderAsync(providerId);
+            account = await WebAuthenticationCoreManager.FindAccountAsync(provider, accountId);
+
+            WebTokenRequest request = new WebTokenRequest(provider, "wl.basic");
+
+            WebTokenRequestResult result = await WebAuthenticationCoreManager.GetTokenSilentlyAsync(request, account);
+            if (result.ResponseStatus == WebTokenRequestStatus.UserInteractionRequired)
+            {
+                // Unable to get a token silently - you'll need to show the UI
+                AccountsSettingsPane.Show();
+                return null;
+            }
+            else if (result.ResponseStatus == WebTokenRequestStatus.Success)
+            {
+                await getUserData(result);
+                return result.ResponseData[0].Token;
+            }
+            else
+            {
+                // Other error 
+                return null;
+            }
+        }
+        private async Task SignOutAccountAsync()
+        {
+            ApplicationData.Current.LocalSettings.Values.Remove("CurrentUserProviderId");
+            ApplicationData.Current.LocalSettings.Values.Remove("CurrentUserId");
+            account.SignOutAsync();
+        }
+        private async void BuildPaneAsync(AccountsSettingsPane s,
+    AccountsSettingsPaneCommandsRequestedEventArgs e)
+        {
+            var deferral = e.GetDeferral();
+
+            var msaProvider = await WebAuthenticationCoreManager.FindAccountProviderAsync(
+                "https://login.microsoft.com", "consumers");
+            e.HeaderText = "Coffee UX will only work if you're signed in.";
+            var command = new WebAccountProviderCommand(msaProvider, GetMsaTokenAsync);
+            var settingsCmd = new SettingsCommand(
+       "settings_privacy",
+       "Privacy policy",
+       async (x) => await Launcher.LaunchUriAsync(new Uri(@"https://privacy.microsoft.com/en-US/")));
+
+            e.Commands.Add(settingsCmd);
+            e.WebAccountProviderCommands.Add(command);
+
+            deferral.Complete();
+        }
+        private async void ButtonLogin_Click(object sender, RoutedEventArgs e)
+        {
+
+           await GetTokenSilentlyAsync();
+            
+        }
+        private async void ButtonLogout_Click(object sender, RoutedEventArgs e)
+        {
+
+            await SignOutAccountAsync();
+            ResetPageData();
+
+        }
+        private void ResetPageData()
+        {
+            ButtonLogin.Visibility = Visibility.Visible;
+             ButtonLogout.Visibility = Visibility.Collapsed;
+            this.NavigationCacheMode = NavigationCacheMode.Required;
+            myProfile.Source = new BitmapImage();
+            placeHolderImage.Visibility = Visibility.Visible;
+            Items = new List<DrinkItem>();
+            this.Loaded += MainPage_Loaded;
+            RootPage.Current.ImageCount = 0;
+        }
+
+
+        private void LoadPageData()
+        {
+            ButtonLogin.Visibility = Visibility.Collapsed;
+            ButtonLogout.Visibility = Visibility.Visible;
+            this.NavigationCacheMode = NavigationCacheMode.Required;
+            var items = DrinkItem.GetData();
+            Items = items;
+            this.Loaded += MainPage_Loaded;
+            RootPage.Current.ImageCount = Items.Count;
+        }
+
         private void MainPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdateTimelineItemsSize();

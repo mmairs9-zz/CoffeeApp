@@ -26,7 +26,9 @@ namespace CoffeeApp
     {
         List<DrinkItem> Items;
         DrinkItem Item;
-        
+        OrderItem item;
+
+
         private bool section3FirstTime = true;
         private bool section4FirstTime = true;
         private bool relatedsectionFirstTime = true;
@@ -48,6 +50,7 @@ namespace CoffeeApp
             UpdateSize(new Size(Window.Current.Bounds.Width, Window.Current.Bounds.Height));
 
             RootElement.ViewChanged += RootElement_ViewChanged;
+            myProfile.Source = App.User.PhotoUrl;
 
             animatableSections.Add(new AnimatableSection(Section1, Section1Animate));
         }
@@ -147,9 +150,10 @@ namespace CoffeeApp
         private void OrderButton_Click(object sender, RoutedEventArgs e)
         {
             string userID = App.User.Id;
-            OrderItem item = new OrderItem
+             item = new OrderItem
             {
                 userId = userID,
+                userName = App.User.Name,
                 drinkName = Item.Title,
                 shots = int.Parse(shotCount.Text),
                 size = selectedSize,
@@ -176,8 +180,19 @@ namespace CoffeeApp
                 EmailMessage emailMessage = new EmailMessage();
 
                 emailMessage.To.Add(new EmailRecipient("mmairs9@gmail.com"));
+                emailMessage.To.Add(new EmailRecipient("brenda_walsh@outlook.com"));
+                emailMessage.To.Add(new EmailRecipient("manuelsaez@hotmail.com")); 
                 emailMessage.Subject = "New Coffee order";
-                emailMessage.Body = App.MobileService.CurrentUser.UserId+" has made a coffee order!";
+                emailMessage.Body = App.User.Name + " has made a coffee order! \n\nOrder Details:\n"
+                    + "Drink: " + item.drinkName + "\n"
+                     + "Size: " + item.size + "\n"
+                + "Decaf: " + item.decaf + "\n"
+                 + "Milk: " + (item.milkType == null ? "n/a" : item.milkType) + "\n"
+                   + "Syrup: " + (item.syrup == null ? "n/a" : item.syrup  )+"\n"
+                     + "Shots: " + item.shots + "\n"
+                       + "Room for Milk: " + item.roomForMilk + "\n"
+                          + "Take Out: " + item.takeout + "\n"
+                             + "Extra Foam: " + item.extraFoam + "\n";
 
                 await client.SendMailAsync(emailMessage);
             }
@@ -226,7 +241,7 @@ namespace CoffeeApp
             if (ck.IsChecked.Value)
                 selectedSyrup = ck.Content.ToString();
         }
-        string selectedSize;
+        string selectedSize = "Regular";
         private void sizeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton ck = sender as RadioButton;

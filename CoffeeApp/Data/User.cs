@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace CoffeApp.Data
 {
@@ -30,6 +31,6 @@ namespace CoffeApp.Data
         /// <summary>
         /// URL to the user's IDP photo.
         /// </summary>
-        public string PhotoUrl { get; set; }
+        public BitmapImage PhotoUrl { get; set; }
     }
 }

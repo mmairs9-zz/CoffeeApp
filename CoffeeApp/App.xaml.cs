@@ -1,4 +1,5 @@
 ﻿using CoffeApp.Data;
+using Microsoft.WindowsAzure.Messaging;
 using Microsoft.WindowsAzure.MobileServices;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.PushNotifications;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -44,7 +48,14 @@ namespace CoffeeApp
         /// The current user of the app. Null if no user is not yet logged in.
         /// </summary>
         public static User User = new User();
+        public static async void InitNotificationsAsync()
+        {
+            var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
 
+            var hub = new NotificationHub("coffee", "Endpoint=sb://coffeeappmz.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=cYfya4uZj2kLcFzjEjPKM00eNzpDxxb3/gspsbEtiVc=");
+            var result = await hub.RegisterNativeAsync(channel.Uri, new string[] { User.Id });
+            
+        }
         public static bool IsXbox()
         {
             if (deviceFamily == null)
@@ -54,7 +65,7 @@ namespace CoffeeApp
         }
         public static MobileServiceClient MobileService =
             new MobileServiceClient(
-                "https://coffeeapp.azurewebsites.net"
+                "https://coffeeappux.azurewebsites.net"
             );
 
         /// <summary>
@@ -64,18 +75,6 @@ namespace CoffeeApp
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
-            if (App.IsXbox())
-            {
-                // use TV colorsafe values
-                this.Resources.MergedDictionaries.Add(new ResourceDictionary
-                {
-                    Source = new Uri("ms-appx:///TvSafeColors.xaml")
-                });
-
-                // remove TV Safe areas
-                ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
-            }
 
             Frame rootFrame = Window.Current.Content as Frame;
 

@@ -9,6 +9,7 @@ namespace CoffeeApp.Data
     public class DrinkItem
     {
         public string Title { get; set; }
+        public string HeroTitle { get; set; }
         public string Summary { get; set; }
         public string HeroImage { get; set; }
         public string drinkImage { get; set; }
@@ -19,7 +20,8 @@ namespace CoffeeApp.Data
             var items = new List<DrinkItem>();
             items.Add(new DrinkItem()
             {
-                Title = "Introducing the Flat White",
+                Title = "Flat White",
+                HeroTitle = "Introducing the Flat White",
                 HeroImage = "https://static.pexels.com/photos/29612/pexels-photo-29612.jpg",
                 drinkImage = "https://globalassets.starbucks.com/assets/1ba88037116d4234807bce3ee442900e.jpg",
                 Summary = "Bold ristretto shots of espresso get the perfect amount of steamed whole milk to create a not too strong, not too creamy, just right flavor.",
@@ -52,7 +54,6 @@ namespace CoffeeApp.Data
         {
             var topics = new List<string>();
             topics.Add("Menu");
-
             return topics;
         }
     }

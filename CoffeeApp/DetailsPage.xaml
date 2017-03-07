@@ -47,7 +47,7 @@
                             <StackPanel HorizontalAlignment="Center">
                                 <TextBlock Text="Size" Style="{ThemeResource BaseTextBlockStyle}"/>
                                 <StackPanel Orientation="Horizontal">
-                                    <RadioButton Content="Regular" Click="sizeRadioButton_Checked" GroupName="size" Tag="Regular" />
+                                    <RadioButton Content="Regular" Click="sizeRadioButton_Checked" IsChecked="True" GroupName="size" Tag="Regular" />
                                     <RadioButton Content="Large"  Click="sizeRadioButton_Checked" GroupName="size" Tag="Large" />
                                 </StackPanel>
                             </StackPanel>
@@ -119,9 +119,8 @@
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,30,40,0">
                
                     <Grid Margin="15,0,0,0" Height="35" Width="35">
-                        <Ellipse  Fill="#19FFFFFF"></Ellipse>
-                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#A3FFFFFF"></TextBlock>
-                    </Grid>
+                        <Image Name="myProfile" Height="35" Width="35"></Image>
+                         </Grid>
 
                 </StackPanel>
             </Grid>
