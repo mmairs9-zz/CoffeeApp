@@ -24,7 +24,7 @@ namespace CoffeeApp.Data
             {
                 Title = "Flat White",
                 HeroTitle = "Introducing the Flat White",
-                HeroImage= "ms-appx:///Assets/flatwhite.jpg",
+                HeroImage= "ms-appx:///Assets/Optimized-flatwhite.jpg",
                 drinkImage = "https://globalassets.starbucks.com/assets/1ba88037116d4234807bce3ee442900e.jpg",
                 Summary = "Bold ristretto shots of espresso get the perfect amount of steamed whole milk to create a not too strong, not too creamy, just right flavor.",
                 IsHero = true
@@ -33,19 +33,19 @@ namespace CoffeeApp.Data
             {
                 Title = "Caffè Americano",
                 Summary = "Espresso shots are topped with hot water to produce a light layer of crema in true European style.",
-                HeroImage = "ms-appx:///Assets/americano.jpg"
+                HeroImage = "ms-appx:///Assets/Optimized-americano.jpg"
             });
             items.Add(new DrinkItem()
             {
                 Title = "Caffe Latte",
                 Summary = "Our dark, rich espresso is balanced with steamed milk and topped with a light layer of foam.A perfect milk - forward warm up.",
-                HeroImage = "ms-appx:///Assets/latte.jpg"
+                HeroImage = "ms-appx:///Assets/Optimized-latte.jpg"
             });
             items.Add(new DrinkItem()
             {
                 Title = "Cappuccino",
                 Summary = "Our dark, rich espresso is balanced with steamed milk and topped with a light layer of foam.A perfect milk - forward warm up.",
-                HeroImage = "ms-appx:///Assets/cappuciano.jpg"
+                HeroImage = "ms-appx:///Assets/Optimized-cappuciano.jpg"
             });
           
 

@@ -49,7 +49,7 @@ namespace CoffeeApp
             
             UpdateSize(new Size(Window.Current.Bounds.Width, Window.Current.Bounds.Height));
 
-            RootElement.ViewChanged += RootElement_ViewChanged;
+          
             myProfile.Source = App.User.PhotoUrl;
 
             animatableSections.Add(new AnimatableSection(Section1, Section1Animate));
