@@ -85,7 +85,7 @@ namespace CoffeeApp
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
 
-            RootPage.Current.UpdateBackground(DrinkItem.GetData().First().HeroImage.UriSource.AbsoluteUri, 0);
+            RootPage.Current.UpdateBackground(DrinkItem.GetData().First().HeroImage.ToString(), 0);
             SectionList.SelectedIndex = 0;
         }
 
@@ -322,6 +322,7 @@ namespace CoffeeApp
             previousFocus = e.OriginalSource as ListViewItem;
         }
 
+        async
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var index = Items.IndexOf(e.ClickedItem as DrinkItem);
@@ -338,7 +339,7 @@ namespace CoffeeApp
 
             var story = e.ClickedItem as DrinkItem;
 
-            RootPage.Current.UpdateBackground(story.HeroImage.UriSource.AbsoluteUri, 0);
+             await RootPage.Current.UpdateBackground(story.HeroImage.ToString(), 0);
             Frame.Navigate(typeof(DetailsPage), story);
 
         }
