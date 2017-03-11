@@ -27,14 +27,6 @@ namespace CoffeeApp
         DrinkItem Item;
         OrderItem item;
 
-
-        private bool section3FirstTime = true;
-        private bool section4FirstTime = true;
-        private bool relatedsectionFirstTime = true;
-        DispatcherTimer videoControlsTimer;
-
-        bool IsFullscreen = false;
-
         List<AnimatableSection> animatableSections = new List<AnimatableSection>();
 
         public DetailsPage()
