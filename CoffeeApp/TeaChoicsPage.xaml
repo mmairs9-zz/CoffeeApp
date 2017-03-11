@@ -1,0 +1,91 @@
+﻿<Page
+    x:Class="CoffeeApp.TeaChoicesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CoffeeApp"
+    xmlns:data="using:CoffeeApp.Data"
+    xmlns:h="using:CoffeeApp.Helpers"
+    xmlns:c="using:CoffeeApp.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Height="650"  >
+
+    <ScrollViewer x:Name="RootElement" 
+                  HorizontalAlignment="Stretch"
+                  HorizontalScrollMode="Disabled"   HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollMode="Auto" VerticalScrollBarVisibility="Hidden"
+                  ZoomMode="Disabled" Margin="0,0,0,0">
+        <StackPanel Margin="0" Height="650">
+
+            <Grid x:Name="Hero" Margin="0">
+                <ProgressRing x:Name="spinner" IsActive="false" Foreground="#FFBB9918" Height="100" Width="100"/>
+                <c:FocusableItem x:Name="Section1" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Width="Auto" Height="Auto" Margin="0,0,0,0.4">
+                    <c:FocusableItem.RenderTransform>
+                        <CompositeTransform SkewX="0.136" TranslateX="0.798"/>
+                    </c:FocusableItem.RenderTransform>
+                    <ScrollViewer 
+                  HorizontalAlignment="Stretch"
+                  HorizontalScrollMode="Disabled"   HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Height="auto"
+                  ZoomMode="Disabled" Margin="0,0,0,0" Width="Auto">
+                        <StackPanel HorizontalAlignment="Stretch" Margin="0" Height="auto"  >
+                            <Border HorizontalAlignment="Center" Margin="0,0,0,20" BorderBrush="#33FFFFFF" BorderThickness="0,0,0,1">
+                                <TextBlock x:Name="TitleLine" TextAlignment="Center" FontSize="29.333" Margin="0,20,0,0" Text="{x:Bind Item.Title}"></TextBlock>
+                            </Border>
+
+                            <StackPanel HorizontalAlignment="Center" >
+                                <TextBlock Text="Size" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton Content="Regular" Click="sizeRadioButton_Checked" IsChecked="True" GroupName="size" Tag="Regular" />
+                                    <RadioButton Content="Large"  Click="sizeRadioButton_Checked" GroupName="size" Tag="Large" />
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Milk" Style="{ThemeResource BaseTextBlockStyle}"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel>
+                                        <RadioButton x:Name="MilkRegular" Checked="milkRadioButton_Checked" GroupName="Milk" Content="Regular"/>
+                                        <RadioButton x:Name="MilkLowFat" Checked="milkRadioButton_Checked" GroupName="Milk" Content="Low Fat"/>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <RadioButton x:Name="MilkSkimmed" Checked="milkRadioButton_Checked" GroupName="Milk" Content="Skimmed"/>
+                                        <RadioButton x:Name="MilkNonDiary" Checked="milkRadioButton_Checked" GroupName="Milk" Content="Non Dairy"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Center" Margin="20">
+                                <TextBlock Text="Additonal" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel>
+                                        <CheckBox x:Name="RoomForMilk" Width="240" Content="Leave room for milk"/>
+                                        <CheckBox x:Name="Takeout" Content="Take Out"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Center" Padding="0,0,0,20">
+                                <Button Content="Order" Click="OrderButton_Click" Background="#FFBB9918"></Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </c:FocusableItem>
+
+
+
+                <Image Source="Assets/logo.png" Height="40" Width="40" VerticalAlignment="Top" HorizontalAlignment="Left"></Image>
+
+
+
+                <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,30,40,0" Height="35" Width="35">
+                    <Image Name="myProfile" Height="35" Width="35"></Image>
+                </Grid>
+
+            </Grid>
+
+
+
+        </StackPanel>
+    </ScrollViewer>
+
+</Page>

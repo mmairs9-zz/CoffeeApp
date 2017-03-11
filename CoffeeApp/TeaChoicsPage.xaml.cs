@@ -22,7 +22,7 @@ namespace CoffeeApp
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class DetailsPage : Page
+    public sealed partial class TeaChoicesPage : Page
     {
         DrinkItem Item;
         OrderItem item;
@@ -37,7 +37,7 @@ namespace CoffeeApp
 
         List<AnimatableSection> animatableSections = new List<AnimatableSection>();
 
-        public DetailsPage()
+        public TeaChoicesPage()
         {
             this.InitializeComponent();
             Window.Current.SizeChanged += Current_SizeChanged;
@@ -60,7 +60,6 @@ namespace CoffeeApp
 
         private void DetailsPage_Loaded(object sender, RoutedEventArgs e)
         {
-
             AnimateSections();
         }
 
@@ -82,6 +81,10 @@ namespace CoffeeApp
                 
                 titleAnimation.TryStart(TitleLine);
             }
+
+          
+
+           
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -147,15 +150,10 @@ namespace CoffeeApp
                 userId = userID,
                 userName = App.User.Name,
                 drinkName = Item.Title,
-                shots = int.Parse(shotCount.Text),
                 size = selectedSize,
                 milkType = selectedMilk,
-                syrup = selectedSyrup,
-                extraFoam = (bool)ExtraFoam.IsChecked,
                 roomForMilk = (bool)RoomForMilk.IsChecked,
-                takeout = (bool)Takeout.IsChecked,
-                decaf = (bool)decaf.IsChecked,
-
+                takeout = (bool)Takeout.IsChecked
             };
             await App.MobileService.GetTable<OrderItem>().InsertAsync(item);
             await sendEmail();
@@ -175,17 +173,13 @@ namespace CoffeeApp
                 emailMessage.To.Add(new EmailRecipient("mmairs9@gmail.com"));
                 emailMessage.To.Add(new EmailRecipient("brenda_walsh@outlook.com"));
                 emailMessage.To.Add(new EmailRecipient("manuelsaez@hotmail.com")); 
-                emailMessage.Subject = "New Coffee order";
-                emailMessage.Body = App.User.Name + " has made a coffee order! \n\nOrder Details:\n"
+                emailMessage.Subject = "New Tea order";
+                emailMessage.Body = App.User.Name + " has made a Tea order! \n\nOrder Details:\n"
                     + "Drink: " + item.drinkName + "\n"
                      + "Size: " + item.size + "\n"
-                + "Decaf: " + item.decaf + "\n"
                  + "Milk: " + (item.milkType == null ? "n/a" : item.milkType) + "\n"
-                   + "Syrup: " + (item.syrup == null ? "n/a" : item.syrup  )+"\n"
-                     + "Shots: " + item.shots + "\n"
                        + "Room for Milk: " + item.roomForMilk + "\n"
                           + "Take Out: " + item.takeout + "\n"
-                             + "Extra Foam: " + item.extraFoam + "\n\n"
                                + "Completing the order?\n\n"
                 + "To complete order please visit https://coffeeappux.azurewebsites.net/swagger/ui/ "
                    + "open the patch section and paste the order id: "+item.Id  +" into the request id field."
@@ -197,47 +191,13 @@ namespace CoffeeApp
         }
 
     
-
-        private void AddShotButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-            if (int.Parse(shotCount.Text)>=5)
-            {
-                return;
-               
-            }
-            else
-            {
-                shotCount.Text = (int.Parse(shotCount.Text) + 1).ToString();
-            }
-        }
-
-        private void RemoveShotButton_Click(object sender, RoutedEventArgs e)
-        {
-       
-            if (int.Parse(shotCount.Text) ==1)
-            {
-                return;
-            }
-            else
-            {
-                shotCount.Text = (int.Parse(shotCount.Text) - 1).ToString();
-            }
-          
-        }
+        
         string selectedMilk;
         private void milkRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton ck = sender as RadioButton;
             if (ck.IsChecked.Value)
                 selectedMilk = ck.Content.ToString();
-        }
-        string selectedSyrup;
-        private void syrupRadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            RadioButton ck = sender as RadioButton;
-            if (ck.IsChecked.Value)
-                selectedSyrup = ck.Content.ToString();
         }
         string selectedSize = "Regular";
         private void sizeRadioButton_Checked(object sender, RoutedEventArgs e)
@@ -248,25 +208,4 @@ namespace CoffeeApp
         }
     }
    
-    internal class AnimatableSection
-    {
-        public FrameworkElement Element { get; set; }
-        private Action Animation { get; set; }
-
-        private bool _alreadyAnimated = false;
-
-        public AnimatableSection(FrameworkElement element, Action animation)
-        {
-            Element = element;
-            Animation = animation;
-        }
-
-        public void Animate()
-        {
-            if (_alreadyAnimated) return;
-
-            _alreadyAnimated = true;
-            Animation?.Invoke();
-        }
-    }
 }

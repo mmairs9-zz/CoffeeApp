@@ -18,7 +18,7 @@
                 <DataTemplate xmlns:data="using:CoffeeApp.Data" x:DataType="data:DrinkItem">
                     <Grid Background="Transparent">
 
-                        <StackPanel  Margin="0,136,0,50" >
+                        <StackPanel  Margin="0,60,0,50" >
                             
 
                             <Grid Loaded="Grid_Loaded" VerticalAlignment="Center" HorizontalAlignment="Center" Height="68" Width="68">
@@ -28,21 +28,21 @@
                                 </composition:CompositionShadow>
                                
                             </Grid>
-                            <TextBlock Name="TitleLine"  Text="{x:Bind HeroTitle}" TextAlignment="Center" Margin="0,36,0,15" FontSize="18"></TextBlock>
+                            <TextBlock Name="TitleLine"  Text="{x:Bind HeroTitle}" TextAlignment="Center" Margin="0,10,0,5" FontSize="18"></TextBlock>
                             <TextBlock Name="SummaryLine" Text="{x:Bind Summary}" MaxWidth="430" TextWrapping="WrapWholeWords" TextAlignment="Center" FontSize="15" MaxLines="4" TextLineBounds="TrimToBaseline" ></TextBlock>
-                           
+                          
                         </StackPanel>
 
-                      
+                   
                     </Grid>
                     
                 </DataTemplate>
             </h:StoryTemplateSelector.HeroStory>
             <h:StoryTemplateSelector.Story>
                 <DataTemplate xmlns:data="using:CoffeeApp.Data" x:DataType="data:DrinkItem">
-                    <Grid Height="120" Background="#33000000" SizeChanged="Template_SizeChanged" Loaded="Template_Loaded">
+                    <Grid Height="90" Background="#33000000" SizeChanged="Template_SizeChanged" Loaded="Template_Loaded">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="10"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <composition:CompositionShadow Color="Black" ShadowOpacity="1" BlurRadius="30" HorizontalAlignment="Stretch" VerticalAlignment="Top">
@@ -56,10 +56,10 @@
                                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
-                            <Grid Loaded="Grid_Loaded" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="68" Width="68" Margin="20,0">
-                                <Ellipse StrokeThickness="1" Stroke="#97FFFFFF" Height="68" Width="68"/>
+                            <Grid Loaded="Grid_Loaded" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="48" Width="48" Margin="20,0,10,0">
+                                <Ellipse StrokeThickness="1" Stroke="#97FFFFFF" Height="48" Width="48"/>
                                 <composition:CompositionShadow Color="Black" OffsetX="0" OffsetY="0" ShadowOpacity="0.5" BlurRadius="30">
-                                    <composition:CompositionImage Source="{x:Bind HeroImage}" Height="55" Width="55" Stretch="UniformToFill"></composition:CompositionImage>
+                                    <composition:CompositionImage Source="{x:Bind HeroImage}" Height="42" Width="42" Stretch="UniformToFill"></composition:CompositionImage>
                                 </composition:CompositionShadow>
                             </Grid>
 
@@ -82,7 +82,7 @@
         <SplitView Name="Splitter" IsPaneOpen="False" DisplayMode="Overlay">
             <SplitView.Pane>
                 <Grid >
-                  
+
                     <ListView Name="SectionList" 
                               Margin="60,110, 0, 0" SelectionMode="Single" 
                               ItemsSource="{x:Bind Topics, Mode=TwoWay}" 
@@ -102,22 +102,57 @@
                     <Border HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,110" BorderBrush="White" BorderThickness="0,0,1,0" Opacity="0.1"></Border>
                 </Grid>
             </SplitView.Pane>
+            <ScrollViewer
+                  HorizontalAlignment="Stretch"
+                  HorizontalScrollMode="Disabled"   HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto"
+                  ZoomMode="Disabled" Margin="0,80,0,0">
+                <StackPanel>
 
-            <ListView x:Name="ItemListView" ItemsSource="{x:Bind Items, Mode=TwoWay}" 
+                    <ListView x:Name="ItemListView" ItemsSource="{x:Bind Items, Mode=TwoWay}" 
                       VerticalAlignment="Stretch" SelectionMode="None" 
                       IsItemClickEnabled="True" ItemClick="ListView_ItemClick" 
                       ItemTemplateSelector="{StaticResource StoryTemplateSelector}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Margin" Value="0"></Setter>
-                        <Setter Property="Padding" Value="0"></Setter>
-                        <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Margin" Value="0"></Setter>
+                                <Setter Property="Padding" Value="0"></Setter>
+                                <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                    <TextBlock x:Name="ChocolateTextBlock" Text="Chocolate" Visibility="Collapsed" HorizontalAlignment="Center"></TextBlock>
+                    <ListView x:Name="ChocolateListView" ItemsSource="{x:Bind ChocolateItems, Mode=TwoWay}" 
+                      VerticalAlignment="Stretch" SelectionMode="None" 
+                      IsItemClickEnabled="True" ItemClick="ListView_ChocolateItemClick" 
+                      ItemTemplateSelector="{StaticResource StoryTemplateSelector}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Margin" Value="0"></Setter>
+                                <Setter Property="Padding" Value="0"></Setter>
+                                <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                    <TextBlock x:Name="TeaTextBlock" Text="Tea" Visibility="Collapsed" HorizontalAlignment="Center"></TextBlock>
+                    <ListView x:Name="TeaListView" ItemsSource="{x:Bind TeaItems, Mode=TwoWay}" 
+                      VerticalAlignment="Stretch" SelectionMode="None" 
+                      IsItemClickEnabled="True" ItemClick="ListView_TeaItemClick" 
+                      ItemTemplateSelector="{StaticResource StoryTemplateSelector}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Margin" Value="0"></Setter>
+                                <Setter Property="Padding" Value="0"></Setter>
+                                <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </StackPanel>
+            </ScrollViewer>
         </SplitView>
-
         <Button Name="HamburgerButton" Padding="0" Width="60" Margin="0,30" Height="40" BorderThickness="0" VerticalAlignment="Top" Background="Transparent" Click="HamburgerButton_Click">
             <FontIcon HorizontalAlignment="Right" Margin="0,0,10,0" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" ></FontIcon>
         </Button>
@@ -132,7 +167,7 @@
             <Ellipse Fill="#19FFFFFF"></Ellipse>
             <TextBlock x:Name="placeHolderImage" FontFamily="Segoe MDL2 Assets" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#A3FFFFFF"></TextBlock>
         </Grid>
-       
+     
         <Button Name="ButtonLogin" HorizontalAlignment="Center" Visibility="Visible" Margin="0,8,8,0"  Click="ButtonLogin_Click" TabIndex="0">
             <StackPanel Orientation="Horizontal">
                 <SymbolIcon Symbol="Permissions"/>

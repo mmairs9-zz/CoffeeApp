@@ -60,6 +60,22 @@ namespace CoffeeApp
             set { Set(ref items, value); }
         }
 
+        private List<DrinkItem> chocolateItems;
+
+        public List<DrinkItem> ChocolateItems
+        {
+            get { return chocolateItems; }
+            set { Set(ref chocolateItems, value); }
+        }
+
+        private List<DrinkItem> teaItems;
+
+        public List<DrinkItem> TeaItems
+        {
+            get { return teaItems; }
+            set { Set(ref teaItems, value); }
+        }
+
         private DrinkItem hero;
 
         public DrinkItem Hero
@@ -85,7 +101,7 @@ namespace CoffeeApp
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
 
-            RootPage.Current.UpdateBackground(DrinkItem.GetData().First().HeroImage.ToString(), 0);
+            RootPage.Current.UpdateBackground(DrinkItem.GetCoffeeDrinks().First().HeroImage.ToString(), 0);
             SectionList.SelectedIndex = 0;
         }
 
@@ -250,6 +266,10 @@ namespace CoffeeApp
             myProfile.Source = new BitmapImage();
             placeHolderImage.Visibility = Visibility.Visible;
             Items = new List<DrinkItem>();
+            ChocolateItems = new List<DrinkItem>();
+            TeaItems = new List<DrinkItem>();
+            TeaTextBlock.Visibility = Visibility.Collapsed;
+            ChocolateTextBlock.Visibility = Visibility.Collapsed;
             this.Loaded += MainPage_Loaded;
             RootPage.Current.ImageCount = 0;
         }
@@ -260,8 +280,11 @@ namespace CoffeeApp
             ButtonLogin.Visibility = Visibility.Collapsed;
             ButtonLogout.Visibility = Visibility.Visible;
             this.NavigationCacheMode = NavigationCacheMode.Required;
-            var items = DrinkItem.GetData();
-            Items = items;
+            Items = DrinkItem.GetCoffeeDrinks();
+            ChocolateItems = DrinkItem.GetChocolateDrinks();
+            TeaItems = DrinkItem.GetTeaDrinks();
+            TeaTextBlock.Visibility = Visibility.Visible;
+            ChocolateTextBlock.Visibility = Visibility.Visible;
             this.Loaded += MainPage_Loaded;
             RootPage.Current.ImageCount = Items.Count;
         }
@@ -326,6 +349,37 @@ namespace CoffeeApp
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var index = Items.IndexOf(e.ClickedItem as DrinkItem);
+            await loadChoicesPage(sender, e, index);
+            var story = e.ClickedItem as DrinkItem;
+
+            await RootPage.Current.UpdateBackground(story.HeroImage.ToString(), 0);
+            Frame.Navigate(typeof(DetailsPage), story);
+
+        }
+        async
+        private void ListView_ChocolateItemClick(object sender, ItemClickEventArgs e)
+        {
+            var index = chocolateItems.IndexOf(e.ClickedItem as DrinkItem);
+            await loadChoicesPage(sender, e, index);
+            var story = e.ClickedItem as DrinkItem;
+
+            await RootPage.Current.UpdateBackground(story.HeroImage.ToString(), 0);
+            Frame.Navigate(typeof(DetailsPage), story);
+
+        }
+        async
+       private void ListView_TeaItemClick(object sender, ItemClickEventArgs e)
+        {
+            var index = teaItems.IndexOf(e.ClickedItem as DrinkItem);
+            await loadChoicesPage(sender, e, index);
+            var story = e.ClickedItem as DrinkItem;
+
+            await RootPage.Current.UpdateBackground(story.HeroImage.ToString(), 0);
+            Frame.Navigate(typeof(TeaChoicesPage), story);
+
+        }
+        private async Task loadChoicesPage(object sender, ItemClickEventArgs e, int index)
+        {
             var children = (sender as ListView).FindChildren<ListViewItem>();
 
             var listViewItem = children.ElementAt(index);
@@ -335,11 +389,7 @@ namespace CoffeeApp
 
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("Title", titleLine);
 
-            var story = e.ClickedItem as DrinkItem;
-
-             await RootPage.Current.UpdateBackground(story.HeroImage.ToString(), 0);
-            Frame.Navigate(typeof(DetailsPage), story);
-
+        
         }
 
         private void Template_SizeChanged(object sender, SizeChangedEventArgs e)

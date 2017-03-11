@@ -99,6 +99,9 @@
     <Compile Include="Data\OrderItem.cs" />
     <Compile Include="Data\ProviderInfo.cs" />
     <Compile Include="Data\User.cs" />
+    <Compile Include="TeaChoicsPage.xaml.cs">
+      <DependentUpon>TeaChoicsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
@@ -146,9 +149,18 @@
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\logo.png" />
     <Content Include="Assets\Optimized-americano.jpg" />
+    <Content Include="Assets\Optimized-berryTea.jpg" />
     <Content Include="Assets\Optimized-cappuciano.jpg" />
+    <Content Include="Assets\Optimized-chamolieTea.jpg" />
+    <Content Include="Assets\Optimized-englishTea.jpg" />
+    <Content Include="Assets\Optimized-espresso.jpg" />
     <Content Include="Assets\Optimized-flatwhite.jpg" />
+    <Content Include="Assets\Optimized-hotChocolate.jpg" />
     <Content Include="Assets\Optimized-latte.jpg" />
+    <Content Include="Assets\Optimized-lemonTea.jpg" />
+    <Content Include="Assets\Optimized-macchiato.jpg" />
+    <Content Include="Assets\Optimized-mocha.jpg" />
+    <Content Include="Assets\Optimized-redTea.jpg" />
     <Content Include="Assets\particle1.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
@@ -165,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="TeaChoicsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
