@@ -49,7 +49,7 @@ namespace CoffeeApp
             
             UpdateSize(new Size(Window.Current.Bounds.Width, Window.Current.Bounds.Height));
 
-          
+            TitleLine.Text = TitleLine.Text + " choices";
             myProfile.Source = App.User.PhotoUrl;
 
             animatableSections.Add(new AnimatableSection(Section1, Section1Animate));
@@ -80,14 +80,11 @@ namespace CoffeeApp
             var titleAnimation = animationService.GetAnimation("Title");
             if (titleAnimation != null)
             {
+                
                 titleAnimation.TryStart(TitleLine);
             }
 
-            var summaryAnimation = animationService.GetAnimation("Summary");
-            if (summaryAnimation != null)
-            {
-                summaryAnimation.TryStart(SummaryText);
-            }
+          
 
            
         }
@@ -106,8 +103,8 @@ namespace CoffeeApp
 
         private void UpdateSize(Size size)
         {
-            HeroGrid.Height = size.Height;
-            Section1.Height = size.Height - 100;
+            //HeroGrid.Height = size.Height;
+            Section1.Height = size.Height;
         }
 
         private void RootElement_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
@@ -143,7 +140,6 @@ namespace CoffeeApp
         private void Section1Animate()
         {
           
-            GlifMain.Offset(offsetY: 20, duration: 0).Then().Fade(1).Offset().Start();
         }
 
         async

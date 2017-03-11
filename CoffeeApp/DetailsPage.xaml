@@ -8,41 +8,32 @@
     xmlns:c="using:CoffeeApp.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Height="650"  >
 
     <ScrollViewer x:Name="RootElement" 
-                  HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                  HorizontalAlignment="Stretch"
                   HorizontalScrollMode="Disabled"   HorizontalScrollBarVisibility="Disabled"
-                  VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto"
-                  ZoomMode="Disabled">
-       
-        <StackPanel HorizontalAlignment="Stretch">
-           
-            <Grid x:Name="Hero">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
+                  VerticalScrollMode="Auto" VerticalScrollBarVisibility="Hidden"
+                  ZoomMode="Disabled" Margin="0,0,0,0">
+        <StackPanel Margin="0" Height="650">
 
-                <Grid Grid.RowSpan="2" Name="HeroGrid">
-                    <ProgressRing x:Name="spinner" IsActive="false" Foreground="#FFBB9918" Height="100" Width="100"/>
-                </Grid>
-
-
-               
-                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top"
-                            Grid.RowSpan="1" Margin="30, 0, 30, 0"  >
-                    <c:FocusableItem x:Name="Section1">
-                        <StackPanel HorizontalAlignment="Stretch" Margin="0,20,0,0" >
-                            <Border HorizontalAlignment="Center" Margin="0,20,0,0" BorderBrush="#33FFFFFF" BorderThickness="0,0,0,1">
-                                <TextBlock x:Name="TitleLine" TextAlignment="Center" FontSize="29.333" Margin="0,0,0,0" Text="{x:Bind Item.Title}"></TextBlock>
+            <Grid x:Name="Hero" Margin="0">
+                <ProgressRing x:Name="spinner" IsActive="false" Foreground="#FFBB9918" Height="100" Width="100"/>
+                <c:FocusableItem x:Name="Section1" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Width="Auto" Height="Auto" Margin="0,0,0,0.4">
+                    <c:FocusableItem.RenderTransform>
+                        <CompositeTransform SkewX="0.136" TranslateX="0.798"/>
+                    </c:FocusableItem.RenderTransform>
+                    <ScrollViewer 
+                  HorizontalAlignment="Stretch"
+                  HorizontalScrollMode="Disabled"   HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Height="auto"
+                  ZoomMode="Disabled" Margin="0,0,0,0" Width="Auto">
+                        <StackPanel HorizontalAlignment="Stretch" Margin="0" Height="auto"  >
+                            <Border HorizontalAlignment="Center" Margin="0,0,0,20" BorderBrush="#33FFFFFF" BorderThickness="0,0,0,1">
+                                <TextBlock x:Name="TitleLine" TextAlignment="Center" FontSize="29.333" Margin="0,20,0,0" Text="{x:Bind Item.Title}"></TextBlock>
                             </Border>
-                            <TextBlock Name="SummaryText" Text="{x:Bind Item.Summary}" TextWrapping="WrapWholeWords" MaxWidth="500" TextAlignment="Center" Opacity="0.6" Margin="0,0,0,25" FontSize="12" TextLineBounds="TrimToBaseline">
-                         
-                            </TextBlock>
-                           
-                            <StackPanel HorizontalAlignment="Center">
+
+                            <StackPanel HorizontalAlignment="Center" >
                                 <TextBlock Text="Size" Style="{ThemeResource BaseTextBlockStyle}"/>
                                 <StackPanel Orientation="Horizontal">
                                     <RadioButton Content="Regular" Click="sizeRadioButton_Checked" IsChecked="True" GroupName="size" Tag="Regular" />
@@ -53,7 +44,7 @@
                                 <TextBlock Text="Shot Options" Style="{ThemeResource BaseTextBlockStyle}"/>
                                 <StackPanel Orientation="Horizontal" >
                                     <TextBlock x:Name="shotCount" Text="1"/>
-                                    <TextBlock x:Name="shotCountLabel" Width="140" Padding="5,0,20,0" Text="Shots"/>
+                                    <TextBlock x:Name="shotCountLabel" Width="140" Padding="5,0,0,0" Text="Shots"/>
                                     <Button x:Name="AddShotButton" Margin="30,0,10,0" Content="+" Click="AddShotButton_Click"></Button>
                                     <Button x:Name="RemoveShotButton" Content="-" Click="RemoveShotButton_Click"></Button>
                                 </StackPanel>
@@ -66,10 +57,10 @@
                             </StackPanel>
                             <StackPanel HorizontalAlignment="Center">
                                 <TextBlock Text="Milk" Style="{ThemeResource BaseTextBlockStyle}"/>
-                         
+
                                 <StackPanel Orientation="Horizontal">
                                     <StackPanel>
-                                    <RadioButton x:Name="MilkRegular" Checked="milkRadioButton_Checked" GroupName="Milk" Content="Regular"/>
+                                        <RadioButton x:Name="MilkRegular" Checked="milkRadioButton_Checked" GroupName="Milk" Content="Regular"/>
                                         <RadioButton x:Name="MilkLowFat" Checked="milkRadioButton_Checked" GroupName="Milk" Content="Low Fat"/>
                                     </StackPanel>
                                     <StackPanel>
@@ -82,12 +73,12 @@
                                 <TextBlock Text="Syrups" Style="{ThemeResource BaseTextBlockStyle}"/>
                                 <StackPanel Orientation="Horizontal">
                                     <StackPanel>
-                                    <RadioButton x:Name="SyrupAlmond" Checked="syrupRadioButton_Checked" GroupName="syrup" Content="Almond"/>
-                                    <RadioButton x:Name="SyrupHazelnut" Checked="syrupRadioButton_Checked" GroupName="syrup" Content="Hazelnut"/>
+                                        <RadioButton x:Name="SyrupAlmond" Checked="syrupRadioButton_Checked" GroupName="syrup" Content="Almond"/>
+                                        <RadioButton x:Name="SyrupHazelnut" Checked="syrupRadioButton_Checked" GroupName="syrup" Content="Hazelnut"/>
                                     </StackPanel>
                                     <StackPanel>
-                                    <RadioButton x:Name="SyrupPeppermint" Checked="syrupRadioButton_Checked" GroupName="syrup" Content="Peppermint"/>
-                                    <RadioButton x:Name="SyrupVanilla" Checked="syrupRadioButton_Checked" GroupName="syrup" Content="Vanilla"/>
+                                        <RadioButton x:Name="SyrupPeppermint" Checked="syrupRadioButton_Checked" GroupName="syrup" Content="Peppermint"/>
+                                        <RadioButton x:Name="SyrupVanilla" Checked="syrupRadioButton_Checked" GroupName="syrup" Content="Vanilla"/>
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
@@ -99,33 +90,31 @@
                                         <CheckBox x:Name="ExtraFoam" Content="Extra Foam"/>
                                         <CheckBox x:Name="Takeout" Content="Take Out"/>
                                     </StackPanel>
-                                  
+
                                 </StackPanel>
                             </StackPanel>
-                            <StackPanel HorizontalAlignment="Center" Padding="0,20">
+                            <StackPanel HorizontalAlignment="Center" Padding="0,0,0,20">
                                 <Button Content="Order" Click="OrderButton_Click" Background="#FFBB9918"></Button>
                             </StackPanel>
-                            <Image Name="GlifMain" Source="Assets/glif1.png" Height="70" Opacity="0"></Image>
                         </StackPanel>
-                    </c:FocusableItem>
+                    </ScrollViewer>
+                </c:FocusableItem>
 
 
-                </StackPanel>
 
-                <Image Source="Assets/logo.png" Height="40" Width="40" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="60,30"></Image>
+                <Image Source="Assets/logo.png" Height="40" Width="40" VerticalAlignment="Top" HorizontalAlignment="Left"></Image>
 
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,30,40,0">
-               
-                    <Grid Margin="15,0,0,0" Height="35" Width="35">
-                        <Image Name="myProfile" Height="35" Width="35"></Image>
-                         </Grid>
 
-                </StackPanel>
+
+                <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,30,40,0" Height="35" Width="35">
+                    <Image Name="myProfile" Height="35" Width="35"></Image>
+                </Grid>
+
             </Grid>
 
-         
-        </StackPanel>
 
+
+        </StackPanel>
     </ScrollViewer>
-    
+
 </Page>

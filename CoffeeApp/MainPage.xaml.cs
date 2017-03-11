@@ -331,11 +331,9 @@ namespace CoffeeApp
             var listViewItem = children.ElementAt(index);
 
             var titleLine = listViewItem.FindDescendantByName("TitleLine");
-            var summaryLine = listViewItem.FindDescendantByName("SummaryLine");
 
 
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("Title", titleLine);
-            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("Summary", summaryLine);
 
             var story = e.ClickedItem as DrinkItem;
 
