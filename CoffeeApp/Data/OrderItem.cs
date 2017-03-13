@@ -17,6 +17,7 @@ namespace CoffeApp.Data
         public bool decaf { get; set; }
         public string milkType { get; set; }
         public string syrup { get; set; }
+        public string status { get; set; }
         public bool roomForMilk { get; set; }
         public bool extraFoam { get; set; }
         public bool takeout { get; set; }

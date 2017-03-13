@@ -8,7 +8,9 @@
     xmlns:composition="using:CoffeeApp.Helpers.Composition"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d"
+    
     Background="Transparent">
     
     <Page.Resources>
@@ -24,7 +26,7 @@
                             <Grid Loaded="Grid_Loaded" VerticalAlignment="Center" HorizontalAlignment="Center" Height="68" Width="68">
                                 <Ellipse StrokeThickness="1" Stroke="#97FFFFFF" Height="68" Width="68"/>
                                 <composition:CompositionShadow Color="Black" OffsetX="0" OffsetY="0" ShadowOpacity="0.5" BlurRadius="30">
-                                    <composition:CompositionImage Source="{x:Bind HeroImage}" Height="55" Width="55" Stretch="UniformToFill"></composition:CompositionImage>
+                                    <composition:CompositionImage Source="{x:Bind DrinkImage}" Height="55" Width="55" Stretch="UniformToFill"></composition:CompositionImage>
                                 </composition:CompositionShadow>
                                
                             </Grid>
@@ -59,7 +61,7 @@
                             <Grid Loaded="Grid_Loaded" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="48" Width="48" Margin="20,0,10,0">
                                 <Ellipse StrokeThickness="1" Stroke="#97FFFFFF" Height="48" Width="48"/>
                                 <composition:CompositionShadow Color="Black" OffsetX="0" OffsetY="0" ShadowOpacity="0.5" BlurRadius="30">
-                                    <composition:CompositionImage Source="{x:Bind HeroImage}" Height="42" Width="42" Stretch="UniformToFill"></composition:CompositionImage>
+                                    <composition:CompositionImage Source="{x:Bind DrinkImage}" Height="42" Width="42" Stretch="UniformToFill"></composition:CompositionImage>
                                 </composition:CompositionShadow>
                             </Grid>
 
@@ -81,7 +83,7 @@
     <Grid x:Name="RootElement">
         <SplitView Name="Splitter" IsPaneOpen="False" DisplayMode="Overlay">
             <SplitView.Pane>
-                <Grid >
+                <Grid  >
 
                     <ListView Name="SectionList" 
                               Margin="60,110, 0, 0" SelectionMode="Single" 
@@ -108,9 +110,16 @@
                   VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto"
                   ZoomMode="Disabled" Margin="0,80,0,0">
                 <StackPanel>
-
+                    <ProgressRing x:Name="spinner" IsActive="false" Margin="0,140,0,0" Foreground="#FFBB9918" Height="100" Width="100"/>
+                    <Button Name="ButtonLogin" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Center"
+                            Visibility="Visible"   Click="ButtonLogin_Click" TabIndex="0">
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Symbol="Permissions"/>
+                            <TextBlock Margin="5">Sign in</TextBlock>
+                        </StackPanel>
+                    </Button>
                     <ListView x:Name="ItemListView" ItemsSource="{x:Bind Items, Mode=TwoWay}" 
-                      VerticalAlignment="Stretch" SelectionMode="None" 
+                      VerticalAlignment="Stretch" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled"
                       IsItemClickEnabled="True" ItemClick="ListView_ItemClick" 
                       ItemTemplateSelector="{StaticResource StoryTemplateSelector}">
                         <ListView.ItemContainerStyle>
@@ -122,8 +131,9 @@
                             </Style>
                         </ListView.ItemContainerStyle>
                     </ListView>
+              
                     <TextBlock x:Name="ChocolateTextBlock" Text="Chocolate" Visibility="Collapsed" HorizontalAlignment="Center"></TextBlock>
-                    <ListView x:Name="ChocolateListView" ItemsSource="{x:Bind ChocolateItems, Mode=TwoWay}" 
+                    <ListView x:Name="ChocolateListView" ItemsSource="{x:Bind ChocolateItems, Mode=TwoWay}" ScrollViewer.VerticalScrollMode="Disabled"
                       VerticalAlignment="Stretch" SelectionMode="None" 
                       IsItemClickEnabled="True" ItemClick="ListView_ChocolateItemClick" 
                       ItemTemplateSelector="{StaticResource StoryTemplateSelector}">
@@ -136,8 +146,10 @@
                             </Style>
                         </ListView.ItemContainerStyle>
                     </ListView>
+
+             
                     <TextBlock x:Name="TeaTextBlock" Text="Tea" Visibility="Collapsed" HorizontalAlignment="Center"></TextBlock>
-                    <ListView x:Name="TeaListView" ItemsSource="{x:Bind TeaItems, Mode=TwoWay}" 
+                    <ListView x:Name="TeaListView" ItemsSource="{x:Bind TeaItems, Mode=TwoWay}" ScrollViewer.VerticalScrollMode="Disabled"
                       VerticalAlignment="Stretch" SelectionMode="None" 
                       IsItemClickEnabled="True" ItemClick="ListView_TeaItemClick" 
                       ItemTemplateSelector="{StaticResource StoryTemplateSelector}">
@@ -151,7 +163,9 @@
                         </ListView.ItemContainerStyle>
                     </ListView>
                 </StackPanel>
+                
             </ScrollViewer>
+            
         </SplitView>
         <Button Name="HamburgerButton" Padding="0" Width="60" Margin="0,30" Height="40" BorderThickness="0" VerticalAlignment="Top" Background="Transparent" Click="HamburgerButton_Click">
             <FontIcon HorizontalAlignment="Right" Margin="0,0,10,0" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" ></FontIcon>
@@ -168,12 +182,7 @@
             <TextBlock x:Name="placeHolderImage" FontFamily="Segoe MDL2 Assets" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#A3FFFFFF"></TextBlock>
         </Grid>
      
-        <Button Name="ButtonLogin" HorizontalAlignment="Center" Visibility="Visible" Margin="0,8,8,0"  Click="ButtonLogin_Click" TabIndex="0">
-            <StackPanel Orientation="Horizontal">
-                <SymbolIcon Symbol="Permissions"/>
-                <TextBlock Margin="5">Sign in</TextBlock>
-            </StackPanel>
-        </Button>
+        
         <!--<Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="60,30">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Name="WeatherIcon" Opacity="0.4" FontFamily="Segoe MDL2 Assets" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#A3FFFFFF"></TextBlock>

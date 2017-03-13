@@ -28,7 +28,7 @@
                   HorizontalScrollMode="Disabled"   HorizontalScrollBarVisibility="Disabled"
                   VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Height="auto"
                   ZoomMode="Disabled" Margin="0,0,0,0" Width="Auto">
-                        <StackPanel HorizontalAlignment="Stretch" Margin="0" Height="auto"  >
+                        <StackPanel HorizontalAlignment="Stretch" Margin="0,20,0,0" Height="auto"  >
                             <Border HorizontalAlignment="Center" Margin="0,0,0,20" BorderBrush="#33FFFFFF" BorderThickness="0,0,0,1">
                                 <TextBlock x:Name="TitleLine" TextAlignment="Center" FontSize="29.333" Margin="0,20,0,0" Text="{x:Bind Item.Title}"></TextBlock>
                             </Border>
@@ -38,6 +38,23 @@
                                 <StackPanel Orientation="Horizontal">
                                     <RadioButton Content="Regular" Click="sizeRadioButton_Checked" IsChecked="True" GroupName="size" Tag="Regular" />
                                     <RadioButton Content="Large"  Click="sizeRadioButton_Checked" GroupName="size" Tag="Large" />
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Center" x:Name="SpecialTeaPanel" >
+                                <TextBlock Padding="15,0,0,0" Text="Tea Type" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <StackPanel  Padding="15,10,0,10" Orientation="Horizontal" Width="268">
+                                    <ComboBox x:Name="TeaSelection" SelectedIndex="1">
+                                        <ComboBoxItem>Lemon Green Tea</ComboBoxItem>
+
+                                        <ComboBoxItem>Yunnan</ComboBoxItem>
+                                        <ComboBoxItem>White Peony</ComboBoxItem>
+                                        <ComboBoxItem>Peppermint</ComboBoxItem>
+                                        <ComboBoxItem>Camillo</ComboBoxItem>
+                                        <ComboBoxItem>Rooiboos</ComboBoxItem>
+                                        <ComboBoxItem>Wild Berry</ComboBoxItem>
+                                        <ComboBoxItem>Blood Orange</ComboBoxItem>
+                                        <ComboBoxItem>Liquorice</ComboBoxItem>
+                                    </ComboBox>
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel HorizontalAlignment="Center">
@@ -65,7 +82,7 @@
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel HorizontalAlignment="Center" Padding="0,0,0,20">
-                                <Button Content="Order" Click="OrderButton_Click" Background="#FFBB9918"></Button>
+                                <Button x:Name="orderButton" Content="Order" Click="OrderButton_Click" Background="#FFBB9918"></Button>
                             </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
@@ -73,7 +90,7 @@
 
 
 
-                <Image Source="Assets/logo.png" Height="40" Width="40" VerticalAlignment="Top" HorizontalAlignment="Left"></Image>
+                <Image Source="Assets/logo.png" Height="40" Width="40" Margin="20,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"></Image>
 
 
 

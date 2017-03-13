@@ -36,14 +36,15 @@ namespace CoffeeApp
             CoreWindow.GetForCurrentThread().KeyDown += DetailsPage_KeyDown;
 
             Loaded += DetailsPage_Loaded;
-            
+            orderbutton.IsEnabled = true;
             UpdateSize(new Size(Window.Current.Bounds.Width, Window.Current.Bounds.Height));
-
             TitleLine.Text = TitleLine.Text + " choices";
             myProfile.Source = App.User.PhotoUrl;
 
             animatableSections.Add(new AnimatableSection(Section1, Section1Animate));
         }
+
+     
 
         private void DetailsPage_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
@@ -133,6 +134,8 @@ namespace CoffeeApp
         private void OrderButton_Click(object sender, RoutedEventArgs e)
         {
             spinner.IsActive = true;
+            spinner.Visibility = Visibility.Visible;
+            orderbutton.IsEnabled = false;
             string userID = App.User.Id;
              item = new OrderItem
             {
@@ -147,6 +150,7 @@ namespace CoffeeApp
                 roomForMilk = (bool)RoomForMilk.IsChecked,
                 takeout = (bool)Takeout.IsChecked,
                 decaf = (bool)decaf.IsChecked,
+                status = "Not Started"
 
             };
             await App.MobileService.GetTable<OrderItem>().InsertAsync(item);
@@ -155,7 +159,8 @@ namespace CoffeeApp
             dialog.Commands.Add(new UICommand("OK"));
             await dialog.ShowAsync();
             spinner.IsActive = false;
-            Frame.Navigate(typeof(MainPage));
+            spinner.Visibility = Visibility.Collapsed;
+            Frame.Navigate(typeof(MainPage),"details");
         }
 
         private async Task sendEmail()
@@ -178,11 +183,15 @@ namespace CoffeeApp
                        + "Room for Milk: " + item.roomForMilk + "\n"
                           + "Take Out: " + item.takeout + "\n"
                              + "Extra Foam: " + item.extraFoam + "\n\n"
-                               + "Completing the order?\n\n"
-                + "To complete order please visit https://coffeeappux.azurewebsites.net/swagger/ui/ "
-                   + "open the patch section and paste the order id: "+item.Id  +" into the request id field."
-                +" Then in the request body paste the following {\"completed\":true} and scroll to the bottom of the section and click the \"Try it out\" Button. " 
-                +"This will complete the order and send a push notification to inform the customer that their drink is ready for collection.";
+                                   + "Starting the order?\n\n"
+                + "To start the order please visit https://coffeeappux.azurewebsites.net/swagger/ui/ "
+                   + "open the patch section and paste the order id: " + item.Id + " into the request id field."
+                + " Then in the request body paste the following {\"status\":\"In Progress\"} and scroll to the bottom of the section and click the \"Try it out\" Button. "
+                + "This will start the order and send a push notification to inform the customer that their drink is being prepared for collection. \n\n"
+                + "Completing the order?\n\n"
+                + " In the request body field past the following {\"status\":\"Completed\"} and scroll to the bottom of the section and click the \"Try it out\" Button. "
+                + "This will complete the order and send a push notification to inform the customer that their drink is ready for collection.";
+
 
                 await client.SendMailAsync(emailMessage);
             }

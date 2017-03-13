@@ -44,10 +44,10 @@ namespace CoffeeApp
             CoreWindow.GetForCurrentThread().KeyDown += DetailsPage_KeyDown;
 
             Loaded += DetailsPage_Loaded;
-            
+            orderButton.IsEnabled = true;
             UpdateSize(new Size(Window.Current.Bounds.Width, Window.Current.Bounds.Height));
-
-            TitleLine.Text = TitleLine.Text + " choices";
+           
+                
             myProfile.Source = App.User.PhotoUrl;
 
             animatableSections.Add(new AnimatableSection(Section1, Section1Animate));
@@ -72,7 +72,10 @@ namespace CoffeeApp
             {
                 Item = item;
             }
-
+            if (Item.Title == "Regular Tea")
+            {
+                SpecialTeaPanel.Visibility = Visibility.Collapsed;
+            }
             var animationService = ConnectedAnimationService.GetForCurrentView();
 
             var titleAnimation = animationService.GetAnimation("Title");
@@ -81,10 +84,9 @@ namespace CoffeeApp
                 
                 titleAnimation.TryStart(TitleLine);
             }
+            
 
-          
 
-           
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -144,14 +146,21 @@ namespace CoffeeApp
         private void OrderButton_Click(object sender, RoutedEventArgs e)
         {
             spinner.IsActive = true;
+            orderButton.IsEnabled = false;
             string userID = App.User.Id;
+            var title = Item.Title;
+            if (title != "Regular Tea")
+            {
+                title = ((Windows.UI.Xaml.Controls.ContentControl)TeaSelection.SelectedItem).Content.ToString()+" Tea";
+            }
              item = new OrderItem
             {
                 userId = userID,
                 userName = App.User.Name,
-                drinkName = Item.Title,
+                drinkName = title,
                 size = selectedSize,
                 milkType = selectedMilk,
+                status = "Not Started",
                 roomForMilk = (bool)RoomForMilk.IsChecked,
                 takeout = (bool)Takeout.IsChecked
             };
@@ -179,11 +188,14 @@ namespace CoffeeApp
                      + "Size: " + item.size + "\n"
                  + "Milk: " + (item.milkType == null ? "n/a" : item.milkType) + "\n"
                        + "Room for Milk: " + item.roomForMilk + "\n"
-                          + "Take Out: " + item.takeout + "\n"
-                               + "Completing the order?\n\n"
-                + "To complete order please visit https://coffeeappux.azurewebsites.net/swagger/ui/ "
-                   + "open the patch section and paste the order id: "+item.Id  +" into the request id field."
-                +" Then in the request body paste the following {\"completed\":true} and scroll to the bottom of the section and click the \"Try it out\" Button. " 
+                          + "Take Out: " + item.takeout + "\n\n"
+                                   + "Starting the order?\n\n"
+                + "To start the order please visit https://coffeeappux.azurewebsites.net/swagger/ui/ "
+                   + "open the patch section and paste the order id: " + item.Id + " into the request id field."
+                + " Then in the request body paste the following {\"status\":\"In Progress\"} and scroll to the bottom of the section and click the \"Try it out\" Button. "
+                + "This will start the order and send a push notification to inform the customer that their drink is being prepared for collection. \n\n"
+                + "Completing the order?\n\n"
+                +" In the request body field past the following {\"status\":\"Completed\"} and scroll to the bottom of the section and click the \"Try it out\" Button. " 
                 +"This will complete the order and send a push notification to inform the customer that their drink is ready for collection.";
 
                 await client.SendMailAsync(emailMessage);

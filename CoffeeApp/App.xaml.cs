@@ -41,8 +41,11 @@ namespace CoffeeApp
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            var gcTimer = new DispatcherTimer();
+            gcTimer.Tick += (sender, e) => { GC.Collect(); };
+            gcTimer.Interval = TimeSpan.FromSeconds(1);
+            gcTimer.Start();
 
-          
         }
         /// <summary>
         /// The current user of the app. Null if no user is not yet logged in.
@@ -75,7 +78,7 @@ namespace CoffeeApp
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
+            
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,

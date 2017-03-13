@@ -14,7 +14,7 @@ namespace CoffeeApp.Data
         public string HeroTitle { get; set; }
         public string Summary { get; set; }
         public string HeroImage { get; set; }
-        public string drinkImage { get; set; }
+        public string DrinkImage { get; set; }
         public bool IsHero { get; set; } = false;
 
         public static List<DrinkItem> GetCoffeeDrinks()
@@ -25,7 +25,7 @@ namespace CoffeeApp.Data
                 Title = "Flat White",
                 HeroTitle = "Introducing the Flat White",
                 HeroImage= "ms-appx:///Assets/Optimized-flatwhite.jpg",
-                drinkImage = "https://globalassets.starbucks.com/assets/1ba88037116d4234807bce3ee442900e.jpg",
+                DrinkImage = "ms-appx:///Assets/flatwhite-small.jpg",
                 Summary = "A double-shot espresso finished off with silky milk all in an 8oz cup. Serious coffee!",
                 IsHero = true
             });
@@ -33,30 +33,35 @@ namespace CoffeeApp.Data
             {
                 Title = "Caffè Americano",
                 Summary = "Espresso shots are topped with hot water to produce a light layer of crema in true European style.",
-                HeroImage = "ms-appx:///Assets/Optimized-americano.jpg"
+                HeroImage = "ms-appx:///Assets/Optimized-americano.jpg",
+                DrinkImage = "ms-appx:///Assets/americano-small.jpg"
             });
             items.Add(new DrinkItem()
             {
                 Title = "Caffe Latte",
                 Summary = "Our dark, rich espresso is balanced with steamed milk and topped with a light layer of foam.A perfect milk - forward warm up.",
+                DrinkImage = "ms-appx:///Assets/latte-small.jpg",
                 HeroImage = "ms-appx:///Assets/Optimized-latte.jpg"
             });
             items.Add(new DrinkItem()
             {
                 Title = "Cappuccino",
                 Summary = "Our dark, rich espresso is balanced with steamed milk and topped with a light layer of foam.A perfect milk - forward warm up.",
+                DrinkImage = "ms-appx:///Assets/cappuciano-small.jpg",
                 HeroImage = "ms-appx:///Assets/Optimized-cappuciano.jpg"
             });
             items.Add(new DrinkItem()
             {
                 Title = "Espresso",
                 Summary = "",
+                DrinkImage = "ms-appx:///Assets/espresso-small.jpg",
                 HeroImage = "ms-appx:///Assets/Optimized-espresso.jpg"
             });
             items.Add(new DrinkItem()
             {
                 Title = "Macchiato",
                 Summary = "",
+                DrinkImage = "ms-appx:///Assets/macchiato-small.jpg",
                 HeroImage = "ms-appx:///Assets/Optimized-macchiato.jpg"
             });
 
@@ -70,36 +75,35 @@ namespace CoffeeApp.Data
             {
                 Title = "Mocha",
                 Summary = "",
+                DrinkImage = "ms-appx:///Assets/mocha-small.jpg",
                 HeroImage = "ms-appx:///Assets/Optimized-mocha.jpg"
             });
             items.Add(new DrinkItem()
             {
                 Title = "White Mocha",
                 Summary = "",
+                DrinkImage = "ms-appx:///Assets/mocha-small.jpg",
                 HeroImage = "ms-appx:///Assets/Optimized-mocha.jpg"
             });
             items.Add(new DrinkItem()
             {
                 Title = "OSO Caramelli",
                 Summary = "Latte, Caramel Syrup, Caramel Drizzle",
+                DrinkImage = "ms-appx:///Assets/hotChocolate-small.jpg",
                 HeroImage = "ms-appx:///Assets/Optimized-hotChocolate.jpg"
             });
             items.Add(new DrinkItem()
             {
                 Title = "Hot Chocolate",
                 Summary = "",
+                DrinkImage = "ms-appx:///Assets/hotChocolate-small.jpg",
                 HeroImage = "ms-appx:///Assets/Optimized-hotChocolate.jpg"
             });
             items.Add(new DrinkItem()
             {
                 Title = "Hot White Chocolate",
                 Summary = "",
-                HeroImage = "ms-appx:///Assets/Optimized-hotChocolate.jpg"
-            });
-            items.Add(new DrinkItem()
-            {
-                Title = "Macchiato",
-                Summary = "",
+                DrinkImage = "ms-appx:///Assets/hotChocolate-small.jpg",
                 HeroImage = "ms-appx:///Assets/Optimized-hotChocolate.jpg"
             });
 
@@ -113,63 +117,17 @@ namespace CoffeeApp.Data
             {
                 Title = "Regular Tea",
                 Summary = "",
+                DrinkImage = "ms-appx:///Assets/englishTea-small.jpg",
                 HeroImage = "ms-appx:///Assets/Optimized-englishTea.jpg"
             });
             items.Add(new DrinkItem()
             {
-                Title = "Yunnan Tea",
+                Title = "Specialty Tea",
+                DrinkImage = "ms-appx:///Assets/chamolieTea-small.jpg",
                 Summary = "",
                 HeroImage = "ms-appx:///Assets/Optimized-chamolieTea.jpg"
             });
-            items.Add(new DrinkItem()
-            {
-                Title ="Lemon Green Tea",
-                Summary = "",
-                HeroImage = "ms-appx:///Assets/Optimized-lemonTea.jpg"
-            });
-            items.Add(new DrinkItem()
-            {
-                Title = "White Peony Tea",
-                Summary = "",
-                HeroImage = "ms-appx:///Assets/Optimized-redTea.jpg"
-            });
-            items.Add(new DrinkItem()
-            {
-                Title = "Peppermint Tea",
-                Summary = "",
-                HeroImage = "ms-appx:///Assets/Optimized-chamolieTea.jpg"
-            });
-            items.Add(new DrinkItem()
-            {
-                Title = "Camillo Tea",
-                Summary = "",
-                HeroImage = "ms-appx:///Assets/Optimized-chamolieTea.jpg"
-            });
-            items.Add(new DrinkItem()
-            {
-                Title = "Rooiboos Tea",
-                Summary = "",
-                HeroImage = "ms-appx:///Assets/Optimized-redTea.jpg"
-            });
-            items.Add(new DrinkItem()
-            {
-                Title = "Wild Berry Tea",
-                Summary = "",
-                HeroImage = "ms-appx:///Assets/Optimized-chamolieTea.jpg"
-            });
-            items.Add(new DrinkItem()
-            {
-                Title = "Blood Orange Tea",
-                Summary = "",
-                HeroImage = "ms-appx:///Assets/Optimized-redTea.jpg"
-            });
-            items.Add(new DrinkItem()
-            {
-                Title = "Liquorice Tea",
-                Summary = "",
-                HeroImage = "ms-appx:///Assets/Optimized-chamolieTea.jpg"
-            });
-          
+           
 
             return items;
         }

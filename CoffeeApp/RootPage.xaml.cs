@@ -103,9 +103,9 @@ namespace CoffeeApp
             {
                 return;
             }
-
-            if (MainFrame.CanGoBack)
-                MainFrame.GoBack();
+            e.Handled = true;
+            MainFrame.Navigate(typeof(MainPage));
+            
         }
     }
 }

@@ -139,6 +139,12 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\americano-small.jpg" />
+    <Content Include="Assets\cappuciano-small.jpg" />
+    <Content Include="Assets\chamolieTea-small.jpg" />
+    <Content Include="Assets\englishTea-small.jpg" />
+    <Content Include="Assets\espresso-small.jpg" />
+    <Content Include="Assets\flatwhite-small.jpg" />
     <Content Include="Assets\glif1.png" />
     <Content Include="Assets\glif2.png" />
     <Content Include="Assets\glif3.png" />
@@ -146,10 +152,13 @@
     <Content Include="Assets\gradient2.png" />
     <Content Include="Assets\gradient3.png" />
     <Content Include="Assets\heart.png" />
+    <Content Include="Assets\hotChocolate-small.jpg" />
+    <Content Include="Assets\latte-small.jpg" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\logo.png" />
+    <Content Include="Assets\macchiato-small.jpg" />
+    <Content Include="Assets\mocha-small.jpg" />
     <Content Include="Assets\Optimized-americano.jpg" />
-    <Content Include="Assets\Optimized-berryTea.jpg" />
     <Content Include="Assets\Optimized-cappuciano.jpg" />
     <Content Include="Assets\Optimized-chamolieTea.jpg" />
     <Content Include="Assets\Optimized-englishTea.jpg" />
@@ -157,10 +166,9 @@
     <Content Include="Assets\Optimized-flatwhite.jpg" />
     <Content Include="Assets\Optimized-hotChocolate.jpg" />
     <Content Include="Assets\Optimized-latte.jpg" />
-    <Content Include="Assets\Optimized-lemonTea.jpg" />
     <Content Include="Assets\Optimized-macchiato.jpg" />
     <Content Include="Assets\Optimized-mocha.jpg" />
-    <Content Include="Assets\Optimized-redTea.jpg" />
+    <Content Include="Assets\Optimized-particle1.png" />
     <Content Include="Assets\particle1.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
@@ -207,6 +215,15 @@
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ARM|x86'">
+    <OutputPath>bin\x86\ARM\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ARM|ARM'">
+    <OutputPath>bin\ARM\ARM\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ARM|x64'">
+    <OutputPath>bin\x64\ARM\</OutputPath>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

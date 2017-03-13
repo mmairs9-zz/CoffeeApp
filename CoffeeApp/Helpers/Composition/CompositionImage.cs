@@ -92,7 +92,7 @@ namespace CoffeeApp.Helpers.Composition
             _surfaceBrush = _compositor.CreateSurfaceBrush(null);
         }
 
-        private void ReleaseSurface()
+        public void ReleaseSurface()
         {
             if (_surface != null)
             {
@@ -223,7 +223,7 @@ namespace CoffeeApp.Helpers.Composition
         private void CompImage_Unloaded(object sender, RoutedEventArgs e)
         {
             _unloaded = true;
-
+            GC.Collect();
             ReleaseSurface();
 
             if (_sprite != null)

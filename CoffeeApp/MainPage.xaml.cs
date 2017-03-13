@@ -90,17 +90,13 @@ namespace CoffeeApp
 
         public MainPage()
         {
-            this.NavigationCacheMode = NavigationCacheMode.Required;
-
-
             Topics = DrinkItem.GetListOfTopics();
-            this.Loaded += MainPage_Loaded;
             this.InitializeComponent();
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-
+           
             RootPage.Current.UpdateBackground(DrinkItem.GetCoffeeDrinks().First().HeroImage.ToString(), 0);
             SectionList.SelectedIndex = 0;
         }
@@ -114,10 +110,12 @@ namespace CoffeeApp
         // using a Facebook sign-in. 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            this.Loaded += MainPage_Loaded;
             AccountsSettingsPane.GetForCurrentView().AccountCommandsRequested += BuildPaneAsync;
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            this.Loaded -= MainPage_Loaded;
             AccountsSettingsPane.GetForCurrentView().AccountCommandsRequested -= BuildPaneAsync;
         }
        
@@ -247,7 +245,8 @@ namespace CoffeeApp
        
         private async void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
-           
+            spinner.IsActive = true;
+            spinner.Visibility = Visibility.Visible;
             await GetTokenSilentlyAsync();
             
         }
@@ -262,7 +261,6 @@ namespace CoffeeApp
         {
             ButtonLogin.Visibility = Visibility.Visible;
              ButtonLogout.Visibility = Visibility.Collapsed;
-            this.NavigationCacheMode = NavigationCacheMode.Required;
             myProfile.Source = new BitmapImage();
             placeHolderImage.Visibility = Visibility.Visible;
             Items = new List<DrinkItem>();
@@ -270,23 +268,23 @@ namespace CoffeeApp
             TeaItems = new List<DrinkItem>();
             TeaTextBlock.Visibility = Visibility.Collapsed;
             ChocolateTextBlock.Visibility = Visibility.Collapsed;
-            this.Loaded += MainPage_Loaded;
             RootPage.Current.ImageCount = 0;
         }
 
 
         private void LoadPageData()
         {
+
             ButtonLogin.Visibility = Visibility.Collapsed;
             ButtonLogout.Visibility = Visibility.Visible;
-            this.NavigationCacheMode = NavigationCacheMode.Required;
             Items = DrinkItem.GetCoffeeDrinks();
             ChocolateItems = DrinkItem.GetChocolateDrinks();
             TeaItems = DrinkItem.GetTeaDrinks();
             TeaTextBlock.Visibility = Visibility.Visible;
             ChocolateTextBlock.Visibility = Visibility.Visible;
-            this.Loaded += MainPage_Loaded;
             RootPage.Current.ImageCount = Items.Count;
+            spinner.Visibility = Visibility.Collapsed;
+            spinner.IsActive = false;
         }
 
         private void MainPage_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -422,7 +420,7 @@ namespace CoffeeApp
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
+       
         public void Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
         {
             if (!Equals(storage, value))

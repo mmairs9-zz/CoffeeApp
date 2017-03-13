@@ -83,8 +83,10 @@ namespace CoffeeApp.Helpers.Composition
         static public async Task<CompositionDrawingSurface> LoadFromUri(Uri uri, Size sizeTarget)
         {
             Debug.Assert(_intialized);
+            CompositionDrawingSurface surface = null;
             
             CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(_canvasDevice, uri);
+           
             Size sizeSource = bitmap.Size;
 
             if (sizeTarget.IsEmpty)
@@ -92,14 +94,14 @@ namespace CoffeeApp.Helpers.Composition
                 sizeTarget = sizeSource;
             }
 
-            CompositionDrawingSurface surface = _compositionDevice.CreateDrawingSurface(sizeTarget, 
+             surface = _compositionDevice.CreateDrawingSurface(sizeTarget, 
                                                             DirectXPixelFormat.B8G8R8A8UIntNormalized, DirectXAlphaMode.Premultiplied);
             using (var ds = CanvasComposition.CreateDrawingSession(surface))
             {
                 ds.Clear(Color.FromArgb(0, 0, 0, 0));
                 ds.DrawImage(bitmap, new Rect(0, 0, sizeTarget.Width, sizeTarget.Height), new Rect(0, 0, sizeSource.Width, sizeSource.Height));
             }
-
+            
             return surface;
         }
 
