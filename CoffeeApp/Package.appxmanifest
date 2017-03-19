@@ -31,5 +31,6 @@
     <Capability Name="internetClientServer" />
     <uap3:Capability Name="userNotificationListener" />
     <uap:Capability Name="userAccountInformation" />
+    <DeviceCapability Name="location" />
   </Capabilities>
 </Package>

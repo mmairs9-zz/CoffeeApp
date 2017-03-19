@@ -10,6 +10,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Networking.PushNotifications;
@@ -41,11 +42,6 @@ namespace CoffeeApp
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            var gcTimer = new DispatcherTimer();
-            gcTimer.Tick += (sender, e) => { GC.Collect(); };
-            gcTimer.Interval = TimeSpan.FromSeconds(1);
-            gcTimer.Start();
-
         }
         /// <summary>
         /// The current user of the app. Null if no user is not yet logged in.
