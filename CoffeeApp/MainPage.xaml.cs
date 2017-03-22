@@ -38,8 +38,6 @@ using Newtonsoft.Json;
 using Windows.System;
 using System.Net.Http;
 using Windows.Data.Json;
-using Windows.Devices.Geolocation;
-using Windows.Devices.Geolocation.Geofencing;
 using Windows.UI.Core;
 using Windows.ApplicationModel.Background;
 
@@ -55,7 +53,6 @@ namespace CoffeeApp
 
         private string _MicrosoftAccountToken = null;
         private string _AppAuthToken = null;
-        private IList<Geofence> geofences;
         private List<DrinkItem> items;
 
         public List<DrinkItem> Items
@@ -95,101 +92,13 @@ namespace CoffeeApp
         public MainPage()
         {
             Topics = DrinkItem.GetListOfTopics();
-            GeofenceMonitor.Current.GeofenceStateChanged += OnGeofenceStateChanged;
-            // Set the fence ID.
-            string fenceId = "fence2";
-
-            // Define the fence location and radius.
-            BasicGeoposition position;
-            position.Latitude = 54.760534;
-            position.Longitude = -6.0492383;
-            position.Altitude = 0.0;
-            double radius = 1609; // in meters
-
-            // Set the circular region for geofence.
-            Geocircle geocircle = new Geocircle(position, radius);
-
-            // Remove the geofence after the first trigger.
-            bool singleUse = false;
-
-            // Set the monitored states.
-            MonitoredGeofenceStates monitoredStates =
-                            MonitoredGeofenceStates.Entered |
-                            MonitoredGeofenceStates.Exited |
-                            MonitoredGeofenceStates.Removed;
-
-            // Set how long you need to be in geofence for the enter event to fire.
-            TimeSpan dwellTime = TimeSpan.FromMinutes(1);
-
-            // Set how long the geofence should be active.
-            TimeSpan duration = TimeSpan.FromDays(1);
-
-            // Set up the start time of the geofence.
-            DateTimeOffset startTime = DateTime.Now;
-
-            // Create the geofence.
-            Geofence geofence = new Geofence(fenceId, geocircle, monitoredStates, singleUse, dwellTime, startTime, duration);
+           
 
             this.InitializeComponent();
         }
-        public async void OnGeofenceStateChanged(GeofenceMonitor sender, object e)
-        {
-            var reports = sender.ReadReports();
-
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            {
-                foreach (GeofenceStateChangeReport report in reports)
-                {
-                    GeofenceState state = report.NewState;
-
-                    Geofence geofence = report.Geofence;
-
-                    if (state == GeofenceState.Removed)
-                    {
-                        // Remove the geofence from the geofences collection.
-                        GeofenceMonitor.Current.Geofences.Remove(geofence);
-                    }
-                    else if (state == GeofenceState.Entered)
-                    {
-                        // Your app takes action based on the entered event.
-                        var dialog = new MessageDialog("Your usual order has been made. We will let you know once it is ready");
-                        dialog.Commands.Add(new UICommand("OK"));
-                        await dialog.ShowAsync();
-                        // NOTE: You might want to write your app to take a particular
-                        // action based on whether the app has internet connectivity.
-
-                    }
-                    else if (state == GeofenceState.Exited)
-                    {
-                        // Your app takes action based on the exited event.
-                        var dialog = new MessageDialog("Your not getting coffee");
-                        dialog.Commands.Add(new UICommand("OK"));
-                        await dialog.ShowAsync();
-                        // NOTE: You might want to write your app to take a particular
-                        // action based on whether the app has internet connectivity.
-
-                    }
-                }
-            });
-        }
         
-
-        async
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            var accessStatus = await Geolocator.RequestAccessAsync();
-            switch (accessStatus)
-            {
-                case GeolocationAccessStatus.Allowed:
-                    geofences = GeofenceMonitor.Current.Geofences;
-                    
-
-                    // Register for state change events.
-                    GeofenceMonitor.Current.GeofenceStateChanged += OnGeofenceStateChanged;
-                    break;
-                    
-            }
-           
             RootPage.Current.UpdateBackground(DrinkItem.GetCoffeeDrinks().First().HeroImage.ToString(), 0);
             SectionList.SelectedIndex = 0;
         }

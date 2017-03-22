@@ -10,6 +10,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Background;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -42,6 +43,7 @@ namespace CoffeeApp
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+           
         }
         /// <summary>
         /// The current user of the app. Null if no user is not yet logged in.
@@ -66,15 +68,58 @@ namespace CoffeeApp
             new MobileServiceClient(
                 "https://coffeeappux.azurewebsites.net"
             );
+        public static BackgroundTaskRegistration RegisterBackgroundTask(string taskEntryPoint,
+                                                                string taskName,
+                                                                IBackgroundTrigger trigger,
+                                                                IBackgroundCondition condition)
+        {
+            //
+            // Check for existing registrations of this background task.
+            //
 
+            foreach (var cur in BackgroundTaskRegistration.AllTasks)
+            {
+
+                if (cur.Value.Name == taskName)
+                {
+                    //
+                    // The task is already registered.
+                    //
+
+                    return (BackgroundTaskRegistration)(cur.Value);
+                }
+            }
+
+            //
+            // Register the background task.
+            //
+
+            var builder = new BackgroundTaskBuilder();
+
+            builder.Name = taskName;
+            builder.TaskEntryPoint = taskEntryPoint;
+            builder.SetTrigger(trigger);
+
+            if (condition != null)
+            {
+
+                builder.AddCondition(condition);
+            }
+
+            BackgroundTaskRegistration task = builder.Register();
+
+            return task;
+        }
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
+        async
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            
+            RegisterBackgroundTask("BackgroundTask.BGTask", "BGTask", new ToastNotificationActionTrigger(), null);
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
