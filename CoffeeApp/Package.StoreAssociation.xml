@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <StoreAssociation xmlns="http://schemas.microsoft.com/appx/2010/storeassociation">
-  <Publisher>CN=ED079633-0D89-4F4E-9508-89CF8CB9225E</Publisher>
-  <PublisherDisplayName>Matthew Mairs</PublisherDisplayName>
+  <Publisher>CN=663B94EB-0E14-493D-A920-DBE92DA7364A</Publisher>
+  <PublisherDisplayName>Brenda Walsh</PublisherDisplayName>
   <GeneratePackageHash>http://www.w3.org/2001/04/xmlenc#sha256</GeneratePackageHash>
   <SupportedLocales>
     <Language Code="af" InMinimumRequirementSet="true" />
@@ -358,11 +358,11 @@
     <Language Code="zu-za" InMinimumRequirementSet="true" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>14068MatthewMairs.16355FD31288A</MainPackageIdentityName>
+    <MainPackageIdentityName>51252BrendaWalsh.CoffeeMScUXD</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>coffeeapp</ReservedName>
+      <ReservedName>Coffee MSc UXD</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames />
-  <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9PMHGPXMGCG9" />
+  <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9NZ31HWXFH83" />
 </StoreAssociation>
