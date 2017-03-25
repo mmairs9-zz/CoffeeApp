@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" IgnorableNamespaces="uap mp uap3">
-  <Identity Name="14068MatthewMairs.16355FD31288A" Publisher="CN=ED079633-0D89-4F4E-9508-89CF8CB9225E" Version="1.2.2.0" />
+  <Identity Name="51252BrendaWalsh.CoffeeMScUXD" Publisher="CN=663B94EB-0E14-493D-A920-DBE92DA7364A" Version="2.1.1.0" />
   <mp:PhoneIdentity PhoneProductId="02fdb029-6e43-4ea7-b41e-eff9450f7607" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>coffeeapp</DisplayName>
-    <PublisherDisplayName>Matthew Mairs</PublisherDisplayName>
+    <DisplayName>Coffee MSc UXD</DisplayName>
+    <PublisherDisplayName>Brenda Walsh</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -21,7 +21,6 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
         <uap:InitialRotationPreference>
           <uap:Rotation Preference="portrait" />
-          <uap:Rotation Preference="landscape" />
         </uap:InitialRotationPreference>
       </uap:VisualElements>
       <Extensions>
